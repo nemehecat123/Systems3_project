@@ -75,4 +75,4 @@ users.post('/register', async (req, res, next) => {
 
 });
 
-module.exports = users
+module.exports = users // js sm pajaco
