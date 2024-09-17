@@ -29,6 +29,20 @@ class SignupView extends React.Component {
 
   QPostSignup = () => {
     // TODO: you should validate the data before sending it to the server,
+    const { username, email, password } = this.state.user_input;
+
+    // Simple validation logic
+    if (!username || !email || !password) {
+        // Indicate missing fields
+        this.setState({ status: { success: false, msg: "All fields are required." } });
+        return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        this.setState({ status: { success: false, msg: "Please enter a valid email address." } });
+        return;
+    }
+
 
     axios.post(API_URL + '/users/register', {
       username: this.state.user_input.username,
