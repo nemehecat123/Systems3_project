@@ -2,12 +2,14 @@ const express = require("express")
 const users = express.Router();
 const DB = require('../db/dbConn.js')
 
+
 users.post('/login', async (req, res, next) => {
     try {
         console.log(req.body);
         const username = req.body.username;
         const password = req.body.password;
         if (username && password) {
+
             const queryResult = await DB.AuthUser(username)
             if (queryResult.length > 0) {
                 if (password === queryResult[0].user_password) {
@@ -67,7 +69,14 @@ users.post('/register', async (req, res, next) => {
         const username = req.body.username
         const password = req.body.password
         const email = req.body.email
-        if (username && password && email) {
+
+        const usernameExists = await DB.checkUsernameExists(username);
+
+            if (usernameExists) {
+                console.log("Username already exists")
+                res.send({ status: { success: false, msg: "Username already exists" } })
+            } else if (username && password && email) {
+            
             const queryResult = await DB.AddUser(username, email, password);
             if (queryResult.affectedRows) {
                 res.statusCode = 200;
@@ -80,7 +89,9 @@ users.post('/register', async (req, res, next) => {
             res.send({ status: { success: false, msg: "Input element missing" } })
             console.log("A field is missing!")
         }
-        res.end();
+        res.end();  
+
+        
     } catch (err) {
         console.log(err)
         res.statusCode = 500;

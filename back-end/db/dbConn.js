@@ -65,6 +65,15 @@ dataPool.AddUser=(username,email,password)=>{
   })
 }
 
+dataPool.checkUsernameExists = (username) => {
+  return new Promise((resolve, reject) => {
+      conn.query('SELECT * FROM user_login WHERE user_name = ?', [username], (err, results) => {
+          if (err) return reject(err);
+          resolve(results.length > 0);
+      });
+  });
+};
+
 
 module.exports = dataPool;
 
