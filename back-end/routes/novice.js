@@ -30,7 +30,9 @@ novice.get('/', async (req, res, next) => {
 })
 
 //Gets one new based on the id 
-novice.get('/:id', async (req, res, next) => {
+novice.get('/', async (req, res, next) => {
+    console.log("novice");
+
     try {
         const queryResult = await DB.oneNovica(req.params.id)
         res.json(queryResult)
@@ -84,5 +86,7 @@ novice.post('/', upload_dest.single('file'), async (req, res, next) => {
         next()
     }
 })
+
+
 
 module.exports = novice

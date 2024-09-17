@@ -11,9 +11,12 @@ users.post('/login', async (req, res, next) => {
             const queryResult = await DB.AuthUser(username)
             if (queryResult.length > 0) {
                 if (password === queryResult[0].user_password) {
+                    //console.log(queryResult)
                     req.session.user = queryResult
                     req.session.logged_in = true
                     res.statusCode = 200;
+                    console.log(req.session)
+                    console.log(req.cookies)
                     res.json({ user: queryResult[0], status: { success: true, msg: "Logged in" } })
                 } else {
                     res.statusCode = 200;
@@ -38,11 +41,23 @@ users.post('/login', async (req, res, next) => {
     }
 });
 
+
 users.get('/session', async (req, res, next) => {
     try {
         res.json(req.session)
     } catch (error) {
         res.sendStatus(500)
+    }
+})
+
+users.get('/logout', async (req, res, next) => {
+    try {
+        req.session.destroy()
+        console.log("Session destoryed ")
+        res.json({ success: true, msg: "Session destoryed"})
+    } catch (error) {
+        res.sendStatus(500)
+        next()
     }
 })
 
@@ -75,4 +90,4 @@ users.post('/register', async (req, res, next) => {
 
 });
 
-module.exports = users // js sm pajaco
+module.exports = users
