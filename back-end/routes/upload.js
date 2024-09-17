@@ -28,5 +28,4 @@ upload.post('/', upload_dest.single('file'), async (req, res, next) => {
     }   
 })
 
-module.exports = upload
 
