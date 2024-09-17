@@ -8,7 +8,11 @@ class AboutView extends React.Component{
              style={{margin:"10px"}}>
             <div className="card-body">
                 <h5 className="card-title">About us</h5>
-                <p className="card-text">Do you really want to know about us? </p>
+                <p className="card-text">This is a website built to store notes.</p>
+                <p className="card-text">Go to Stored to se your stored notes</p>
+                <p className="card-text">Go to Search to searh notes from others and see them.</p>
+                <p className="card-text">Go to My Notes to see your own notes .</p>
+
             </div>
         </div>
         )
