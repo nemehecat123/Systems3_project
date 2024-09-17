@@ -81,119 +81,117 @@ class App extends Component {
   render() {
     return (
       <div id="APP" className="container">
-        <div id="menu" className="row">
-          <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-            <div className="container-fluid">
-              <a
-                //onClick={() => this.QSetView({ page: "home" })}
-                onClick={this.QSetView.bind(this, { page: "home" })}
-                className="navbar-brand"
-                href="#"
-              >
-                Home
-              </a>
-              <button
-                className="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-              >
-                <span className="navbar-toggler-icon"></span>
-              </button>
-
-              <div
-                className="collapse navbar-collapse"
-                id="navbarSupportedContent"
-              >
-                <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <a
-                onClick={this.QSetView.bind(this, { page: ABOUT })}
-                className="nav-link"
-                href="#"
-              >
-                About
-              </a>
-            </li>
-
-            <li className="nav-item">
-              <a
-                onClick={this.QSetView.bind(this, { page: NOVICE })}
-                className="nav-link"
-                href="#"
-              >
-                News
-              </a>
-            </li>
-
-            <li className="nav-item">
-              <a
-                onClick={this.QSetView.bind(this, { page: ADDNEW })}
-                className="nav-link"
-                href="#"
-              >
-                Add news
-              </a>
-            </li>
-
-            <li className="nav-item">
-              <a
-                onClick={this.QSetView.bind(this, { page: UPLOAD })}
-                className="nav-link"
-                href="#"
-              >
-                Upload
-              </a>
-            </li>
-          </ul>
-
-          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-            {this.state.loggedIn ? (
-              <li className="nav-item">
-                <a
-                  onClick={this.QLogout}
-                  className="nav-link"
-                  href="#"
-                >
-                  Logout
-                </a>
-              </li>
-            ) : (
-              <>
-                <li className="nav-item">
-                  <a
-                    onClick={this.QSetView.bind(this, { page: SIGNUP })}
-                    className="nav-link"
-                    href="#"
-                  >
-                    Sign up
-                  </a>
-                </li>
-
-                <li className="nav-item">
-                  <a
-                    onClick={this.QSetView.bind(this, { page: LOGIN })}
-                    className="nav-link"
-                    href="#"
-                  >
-                    Login
-                  </a>
-                </li>
-              </>
-            )}
-          </ul>
-              </div>
+      <div id="menu" className="row">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+          <div className="container-fluid">
+            <a
+              onClick={this.QSetView.bind(this, { page: "home" })}
+              className="navbar-brand"
+              href="#"
+            >
+              Home
+            </a>
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+    
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+              {this.state.loggedIn ? (
+                <>
+                  <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li className="nav-item">
+                      <a
+                        onClick={this.QSetView.bind(this, { page: ABOUT })}
+                        className="nav-link"
+                        href="#"
+                      >
+                        About
+                      </a>
+                    </li>
+    
+                    <li className="nav-item">
+                      <a
+                        onClick={this.QSetView.bind(this, { page: NOVICE })}
+                        className="nav-link"
+                        href="#"
+                      >
+                        News
+                      </a>
+                    </li>
+    
+                    <li className="nav-item">
+                      <a
+                        onClick={this.QSetView.bind(this, { page: ADDNEW })}
+                        className="nav-link"
+                        href="#"
+                      >
+                        Add news
+                      </a>
+                    </li>
+    
+                    <li className="nav-item">
+                      <a
+                        onClick={this.QSetView.bind(this, { page: UPLOAD })}
+                        className="nav-link"
+                        href="#"
+                      >
+                        Upload
+                      </a>
+                    </li>
+                  </ul>
+    
+                  <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li className="nav-item">
+                      <a
+                        onClick={this.QLogout}
+                        className="nav-link"
+                        href="#"
+                      >
+                        Logout
+                      </a>
+                    </li>
+                  </ul>
+                </>
+              ) : (
+                <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                  <li className="nav-item">
+                    <a
+                      onClick={this.QSetView.bind(this, { page: SIGNUP })}
+                      className="nav-link"
+                      href="#"
+                    >
+                      Sign up
+                    </a>
+                  </li>
+    
+                  <li className="nav-item">
+                    <a
+                      onClick={this.QSetView.bind(this, { page: LOGIN })}
+                      className="nav-link"
+                      href="#"
+                    >
+                      Login
+                    </a>
+                  </li>
+                </ul>
+              )}
             </div>
-          </nav>
-        </div>
-
-        <div id="viewer" className="row container">
-          {this.QGetView(this.state)}
-        </div>
+          </div>
+        </nav>
       </div>
+    
+      <div id="viewer" className="row container">
+        {this.QGetView(this.state)}
+      </div>
+    </div>
     );
   }
 }
