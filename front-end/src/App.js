@@ -19,6 +19,7 @@ class App extends Component {
     this.state = {
       CurrentPage: HOME,
       Novica: 1,
+      loggedIn: false,
       status: {
         success: null,
         msg: ""
@@ -61,6 +62,22 @@ class App extends Component {
     });
   };
 
+  QLogout = () => {
+    this.setState({ loggedIn: false, user: null, CurrentPage: HOME });
+    axios.get(API_URL + '/users/logout')
+      .then(response => {
+        if (response.data.success) {
+          this.setState({ loggedIn: false, user: null });
+        }
+      })
+      .catch(err => console.log(err));
+
+  };
+
+  QSetLoggedIn = (userData) => {
+    this.setState({ loggedIn: true, user: userData, CurrentPage: HOME });
+  };
+
   render() {
     return (
       <div id="APP" className="container">
@@ -92,67 +109,82 @@ class App extends Component {
                 id="navbarSupportedContent"
               >
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                  <li className="nav-item">
-                    <a
-                      // onClick={() => this.QSetView({ page: ABOUT })}
-                      onClick={this.QSetView.bind(this, { page: ABOUT })}
-                      className="nav-link "
-                      href="#"
-                    >
-                      About
-                    </a>
-                  </li>
+            <li className="nav-item">
+              <a
+                onClick={this.QSetView.bind(this, { page: ABOUT })}
+                className="nav-link"
+                href="#"
+              >
+                About
+              </a>
+            </li>
 
-                  <li className="nav-item">
-                    <a
-                      // onClick={() => this.QSetView({ page: NOVICE })}
-                      onClick={this.QSetView.bind(this, { page: NOVICE })}
-                      className="nav-link "
-                      href="#"
-                    >
-                      News
-                    </a>
-                  </li>
+            <li className="nav-item">
+              <a
+                onClick={this.QSetView.bind(this, { page: NOVICE })}
+                className="nav-link"
+                href="#"
+              >
+                News
+              </a>
+            </li>
 
-                  <li className="nav-item">
-                    <a
-                      //onClick={() => this.QSetView({ page: ADDNEW })}
-                      onClick={this.QSetView.bind(this, { page: ADDNEW })}
-                      className="nav-link"
-                      href="#"
-                    >
-                      Add news
-                    </a>
-                  </li>
+            <li className="nav-item">
+              <a
+                onClick={this.QSetView.bind(this, { page: ADDNEW })}
+                className="nav-link"
+                href="#"
+              >
+                Add news
+              </a>
+            </li>
 
+            <li className="nav-item">
+              <a
+                onClick={this.QSetView.bind(this, { page: UPLOAD })}
+                className="nav-link"
+                href="#"
+              >
+                Upload
+              </a>
+            </li>
+          </ul>
 
-                  <li className="nav-item">
-                    <a
-                      //onClick={() => this.QSetView({ page: ADDNEW })}
-                      onClick={this.QSetView.bind(this, { page: UPLOAD })}
-                      className="nav-link"
-                      href="#"
-                    >
-                      Upload
-                    </a>
-                  </li>
+          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+            {this.state.loggedIn ? (
+              <li className="nav-item">
+                <a
+                  onClick={this.QLogout}
+                  className="nav-link"
+                  href="#"
+                >
+                  Logout
+                </a>
+              </li>
+            ) : (
+              <>
+                <li className="nav-item">
+                  <a
+                    onClick={this.QSetView.bind(this, { page: SIGNUP })}
+                    className="nav-link"
+                    href="#"
+                  >
+                    Sign up
+                  </a>
+                </li>
 
-                  <li className="nav-item">
-                    <a
-                      //onClick={() => this.QSetView({ page: SIGNUP })}
-                      onClick={this.QSetView.bind(this, { page: SIGNUP })}
-                      className="nav-link "
-                      href="#"
-                    >
-                      Sign up
-                    </a>
-                  </li>
-
-                 <li className="nav-item" ><a onClick={this.QSetView.bind(this, { page: LOGIN })}
-                      className="nav-link " href="#"> Login </a>
-                 </li>
-                
-                </ul>
+                <li className="nav-item">
+                  <a
+                    onClick={this.QSetView.bind(this, { page: LOGIN })}
+                    className="nav-link"
+                    href="#"
+                  >
+                    Login
+                  </a>
+                </li>
+              </>
+            )}
+          </ul>
               </div>
             </div>
           </nav>

@@ -10,8 +10,7 @@ class LoginView extends React.Component {
     this.state = {
       user_input: {
         username: "",
-        password: "",
-        remember_me: false
+        password: ""
       },
       user: null,
       status: {
@@ -21,12 +20,21 @@ class LoginView extends React.Component {
     }
   }
 
+  handleLogin = (userData) => {
+    this.setState({ user: userData.user, loggedIn: true });
+  }
+
+  /*QGetTextFromField=(e)=>{
+    this.setState(prevState=>({
+      user_input:{...prevState.user_input,[e.target.name]:e.target.value}
+    }))
+  }*/
+
   QGetTextFromField(e) {
     this.state.user_input[e.target.name] = e.target.value;
     this.setState({ user_input: this.state.user_input });
   }
 
-  
   QPostLogin = () => {
     // TODO: you should validate the data before sending it to the server,
     if (this.state.user_input.username == "" |
@@ -34,10 +42,16 @@ class LoginView extends React.Component {
     ) {
       //this.state.status= {success:false, msg:"Missing input filed"}
       this.setState(this.state.status = { success: false, msg: "Missing input filed" })
+      console.log("wipiee")
       return
     }
 
-      axios.post(API_URL + '/users/login',
+    let req = axios.create({
+      timeout: 20000,
+      withCredentials: true,
+    });
+
+    req.post(API_URL + '/users/login',
       {
         username: this.state.user_input.username,
         password: this.state.user_input.password
@@ -50,6 +64,9 @@ class LoginView extends React.Component {
           console.log(response.data)
           this.setState(this.state.status = response.data.status)
           this.setState(this.state.user = response.data.user)
+          if (this.state.status.success) {
+            this.props.QUserFromChild(response.data.user); // Pass user data to parent component
+          }
           
         } else {
           console.log("Something is really wrong, DEBUG!")
@@ -80,16 +97,16 @@ class LoginView extends React.Component {
               className="form-control"
               id="exampleInputPassword1" />
           </div>
-            {/* TODO: Add checkbox to the form. Use bootstrap to do it.*/}
+           {/* TODO: Add checkbox using bootstrap and link onChange to a function that sets the state of remember_me*/}
         </form>
         <button style={{ margin: "10px" }} onClick={() => this.QPostLogin()}
           className="btn btn-primary bt">Sign</button>
 
         {/* TODO: We should display error to the user if something went wrong or a
-      success message  if an item was added. Use paragraph with the following classNmes:
-      => no success: <p className="alert alert-danger" role="alert"> 
-      => success: <p className="alert alert-success" role="alert"> 
-      */}
+        success message  if an item was added. Use paragraph with the following classNmes:
+        => no success: <p className="alert alert-danger" role="alert"> 
+        => success: <p className="alert alert-success" role="alert"> 
+        */}
         {this.state.status.success ?
           <p className="alert alert-success"
             role="alert">{this.state.status.msg}</p> : null}
@@ -104,6 +121,9 @@ class LoginView extends React.Component {
   }
 }
 
+LoginView.propTypes = {
+  QUserFromChild: PropTypes.func.isRequired,
+};
 
 
 
