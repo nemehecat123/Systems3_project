@@ -97,6 +97,7 @@ users.post('/register', async (req, res, next) => {
         res.statusCode = 500;
         res.send({ status: { success: false, msg: err } })
         next()
+        //a comment
     }
 
 });
