@@ -98,6 +98,7 @@ users.post('/register', async (req, res, next) => {
         res.send({ status: { success: false, msg: err } })
         next()
         //a comment
+        // another comment for testing branches
     }
 
 });
