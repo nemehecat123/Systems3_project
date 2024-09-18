@@ -74,6 +74,15 @@ dataPool.checkUsernameExists = (username) => {
   });
 };
 
+dataPool.getAllNotesForUser = (userId) => {
+  return new Promise((resolve, reject) => {
+      conn.query('SELECT * FROM notes WHERE user_id = ?', [userId], (err, res) => {
+          if (err) return reject(err);
+          return resolve(res);
+      });
+  });
+};
+
 
 module.exports = dataPool;
 
