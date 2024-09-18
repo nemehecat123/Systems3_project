@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { API_URL } from "../Utils/Configuration";
 
 const MyNotesView = () => {
   const [notes, setNotes] = useState([]);
@@ -11,8 +12,11 @@ const MyNotesView = () => {
     const fetchNotes = async () => {
       try {
         // Assuming you have an endpoint like '/api/notes/user/:userId'
-        const response = await axios.get('/api/notes/user');
+        console.log("do sm je prslo 1")
+
+        const response = await axios.get(API_URL + '/notes');
         setNotes(response.data.notes);
+        console.log("do sm je prslo 2")
       } catch (err) {
         setError('Failed to fetch notes');
       } finally {
