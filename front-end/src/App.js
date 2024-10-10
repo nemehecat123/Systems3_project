@@ -1,8 +1,7 @@
 import { Component } from "react";
-import { ABOUT, NOVICE, ADDNEW, SIGNUP, LOGIN, NOVICA, HOME, LOGOUT, UPLOAD, MYNOTES } from "./Utils/Constants"
+import { ABOUT, NOVICE, ADDNEW, SIGNUP, LOGIN, HOME, LOGOUT, UPLOAD, MYNOTES } from "./Utils/Constants"
 import HomeView from "./CustomComponents/HomeView";
 import AboutView from "./CustomComponents/AboutView";
-import NoviceView from "./CustomComponents/NoviceView";
 import AddNovicaView from "./CustomComponents/AddNovicaView";
 import SignupView from "./CustomComponents/SignupView";
 import LoginView from "./CustomComponents/LoginView";
@@ -34,8 +33,6 @@ class App extends Component {
     switch (page) {
       case ABOUT:
         return <AboutView />;
-      case NOVICE:
-        return <NoviceView QIDFromChild={this.QSetView} />;
       case ADDNEW:
         return <AddNovicaView />;
       case SIGNUP:
@@ -46,8 +43,6 @@ class App extends Component {
         return <HomeView />;
       case UPLOAD:
         return <FilesUploadComponent />;
-      case NOVICA:
-        return <SingleNovicaView data={state.Novica} QIDFromChild={this.QSetView} />;
       case MYNOTES:
         return <MyNotesView />;
       default:
@@ -59,6 +54,8 @@ class App extends Component {
     this.setState(this.state.status = { success: null, msg: "" })
 
     console.log("QSetView");
+    console.log(this.state.user);
+
     this.setState({
       CurrentPage: obj.page,
       Novica: obj.id || 0
@@ -117,16 +114,6 @@ class App extends Component {
                         href="#"
                       >
                         About
-                      </a>
-                    </li>
-    
-                    <li className="nav-item">
-                      <a
-                        onClick={this.QSetView.bind(this, { page: NOVICE })}
-                        className="nav-link"
-                        href="#"
-                      >
-                        News
                       </a>
                     </li>
     
