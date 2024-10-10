@@ -1,6 +1,9 @@
 const express = require("express")
 const users = express.Router();
 const DB = require('../db/dbConn.js')
+const jwt = require('jsonwebtoken'); // Use JWT for token-based authentication
+const SECRET_KEY = process.env.JWT_SECRET || 'your_secret_key';
+
 
 
 users.post('/login', async (req, res, next) => {
@@ -14,12 +17,16 @@ users.post('/login', async (req, res, next) => {
             if (queryResult.length > 0) {
                 if (password === queryResult[0].user_password) {
                     //console.log(queryResult)
-                    req.session.user = queryResult
-                    req.session.logged_in = true
+                    req.session.user = queryResult[0];
+                    req.session.logged_in = true; 
                     res.statusCode = 200;
                     console.log(req.session)
                     console.log(req.cookies)
-                    res.json({ user: queryResult[0], status: { success: true, msg: "Logged in" } })
+                    console.log(queryResult)
+                    const token = jwt.sign({ id: queryResult[0].id, username: queryResult[0].user_name }, SECRET_KEY, { expiresIn: '1d' });
+
+                // Send the token and user data to the frontend
+                    res.json({  user: queryResult[0], token, status: { success: true, msg: "Logged in" } });
                 } else {
                     res.statusCode = 200;
                     res.json({ user: null, status: { success: false, msg: "Username or password incorrect" } })
@@ -46,6 +53,7 @@ users.post('/login', async (req, res, next) => {
 
 users.get('/session', async (req, res, next) => {
     try {
+        console.log(req.session);
         res.json(req.session)
     } catch (error) {
         res.sendStatus(500)
@@ -58,6 +66,7 @@ users.get('/logout', async (req, res, next) => {
         console.log("Session destoryed ")
         res.json({ success: true, msg: "Session destoryed"})
     } catch (error) {
+        console.log("tle neki sfali")
         res.sendStatus(500)
         next()
     }

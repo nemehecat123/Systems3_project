@@ -4,7 +4,7 @@ const conn = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASS, 
-    database: 'Qcodeigniter',
+    database: process.env.DB_DATABASE,
   })
 
  conn.connect((err) => {
@@ -18,37 +18,12 @@ const conn = mysql.createConnection({
 
     let dataPool={}
   
-dataPool.allNovice=()=>{
-  return new Promise ((resolve, reject)=>{
-    conn.query(`SELECT * FROM news`, (err,res)=>{
-      if(err){return reject(err)}
-      return resolve(res)
-    })
-  })
-}
 
-dataPool.oneNovica=(id)=>{
-  return new Promise ((resolve, reject)=>{
-    conn.query(`SELECT * FROM news WHERE id = ?`, id, (err,res)=>{
-      if(err){return reject(err)}
-      return resolve(res)
-    })
-  })
-}
-
-dataPool.creteNovica=(title,slug,text,file)=>{
-  return new Promise ((resolve, reject)=>{
-    conn.query(`INSERT INTO news (title,slug,text, file) VALUES (?,?,?,?)`, [title, slug, text, file], (err,res)=>{
-      if(err){return reject(err)}
-      return resolve(res)
-    })
-  })
-}
 
 dataPool.AuthUser=(username)=>
 {
   return new Promise ((resolve, reject)=>{
-    conn.query('SELECT * FROM user_login WHERE user_name = ?', username, (err,res, fields)=>{
+    conn.query('SELECT * FROM users WHERE user_name = ?', username, (err,res, fields)=>{
       if(err){return reject(err)}
       return resolve(res)
     })
@@ -58,7 +33,7 @@ dataPool.AuthUser=(username)=>
 
 dataPool.AddUser=(username,email,password)=>{
   return new Promise ((resolve, reject)=>{
-    conn.query(`INSERT INTO user_login (user_name,user_email,user_password) VALUES (?,?,?)`, [username, email, password], (err,res)=>{
+    conn.query(`INSERT INTO users (user_name,user_email,user_password) VALUES (?,?,?)`, [username, email, password], (err,res)=>{
       if(err){return reject(err)}
       return resolve(res)
     })
@@ -67,22 +42,50 @@ dataPool.AddUser=(username,email,password)=>{
 
 dataPool.checkUsernameExists = (username) => {
   return new Promise((resolve, reject) => {
-      conn.query('SELECT * FROM user_login WHERE user_name = ?', [username], (err, results) => {
+      conn.query('SELECT * FROM users WHERE user_name = ?', [username], (err, results) => {
           if (err) return reject(err);
           resolve(results.length > 0);
       });
-  });
+  }); 
 };
 
 dataPool.getAllNotesForUser = (userId) => {
   return new Promise((resolve, reject) => {
-      conn.query('SELECT * FROM notes WHERE user_id = ?', [userId], (err, res) => {
+      conn.query('SELECT * FROM notes WHERE id = ?', [userId], (err, res) => {
           if (err) return reject(err);
           return resolve(res);
       });
   });
 };
-
-
 module.exports = dataPool;
 
+
+
+
+
+// dataPool.allNovice=()=>{
+//   return new Promise ((resolve, reject)=>{
+//     conn.query(`SELECT * FROM news`, (err,res)=>{
+//       if(err){return reject(err)}
+//       return resolve(res)
+//     })
+//   })
+// }
+
+// dataPool.oneNovica=(id)=>{
+//   return new Promise ((resolve, reject)=>{
+//     conn.query(`SELECT * FROM news WHERE id = ?`, id, (err,res)=>{
+//       if(err){return reject(err)}
+//       return resolve(res)
+//     })
+//   })
+// }
+
+// dataPool.creteNovica=(title,slug,text,file)=>{
+//   return new Promise ((resolve, reject)=>{
+//     conn.query(`INSERT INTO news (title,slug,text, file) VALUES (?,?,?,?)`, [title, slug, text, file], (err,res)=>{
+//       if(err){return reject(err)}
+//       return resolve(res)
+//     })
+//   })
+// }
