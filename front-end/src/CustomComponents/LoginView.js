@@ -2,7 +2,9 @@ import React from "react";
 import PropTypes from 'prop-types';
 import axios from "axios";
 import { API_URL } from "../Utils/Configuration";
+import Cookies from 'universal-cookie';
 
+const cookies = new Cookies();
 
 class LoginView extends React.Component {
   constructor(props) {
@@ -55,19 +57,18 @@ class LoginView extends React.Component {
       {
         username: this.state.user_input.username,
         password: this.state.user_input.password
-      })
+      },{ withCredentials: true })
       .then(response => {
         console.log("Sent to server...")
-        console.log(this.state.user_input)
-        console.log(response.status)
         if (response.status == 200) {
           console.log(response.data)
           this.setState(this.state.status = response.data.status)
           this.setState(this.state.user = response.data.user)
+          console.log(response.data.user)
           if (this.state.status.success) {
             this.props.QUserFromChild(response.data.user); // Pass user data to parent component
-          }
-          
+            cookies.set("authToken", response.data.user.id, { path: "/", maxAge: 86400 }); // 1-day expiry
+          } 
         } else {
           console.log("Something is really wrong, DEBUG!")
         }
