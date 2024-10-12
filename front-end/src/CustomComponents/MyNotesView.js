@@ -19,7 +19,9 @@ constructor(props) {
         success: null,
         msg: ""
       },
-      notes:[],
+      notes: [],       
+      loading: true,    
+      error: null        
     }
   }
 
@@ -40,18 +42,17 @@ constructor(props) {
         },
         withCredentials: true,  // Ensure cookies are sent with the request
       });
-      console.log('Response:', response.data);
+      console.log('Response:', response.data.notes);
 
       // Updating state with the fetched notes
-      this.setState({ notes: response.data.notes, loading: false });
-      console.log('Response:', response.data);
+      this.setState({ notes: response.data, loading: false });
 
     } catch (err) {
       // Handling errors and setting the error state
       this.setState({ error: 'Failed to fetch notes', loading: false });
     }
   };render() {
-    const { notes, loading, error } = this.state;
+    const { loading, error, notes  } = this.state;
 
     // Show loading indicator
     if (loading) {

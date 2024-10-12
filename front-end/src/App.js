@@ -54,8 +54,6 @@ class App extends Component {
     this.setState(this.state.status = { success: null, msg: "" })
 
     console.log("QSetView");
-    console.log(this.state.user);
-
     this.setState({
       CurrentPage: obj.page,
       Novica: obj.id || 0
