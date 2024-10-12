@@ -29,11 +29,16 @@ app.use(cookieParser());
 // }
 
 let sess = {
-    secret: 'our litle secrett',
+    secret: 'yourSecret',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false }
-}
+    cookie: {
+        secure: false,  // This disables the 'Secure' flag for local development
+        httpOnly: true,
+        sameSite: 'None',  // Allow cross-origin cookies
+        maxAge: 24 * 60 * 60 * 1000  // 1 day
+    }
+};
 // let sess = {
 //     secret: 'our litle secret',
 //     saveUninitialized: true,
@@ -60,10 +65,14 @@ app.use(express.urlencoded({ extended: true }));
 const novice = require('./routes/novice')
 const users = require('./routes/users')
 const upload = require('./routes/upload')
+const notes = require('./routes/notes')
+
 
 app.use('/novice', novice)
 app.use('/users', users)
 app.use('/uploadFile', upload)
+app.use('/notes', notes)
+
 
 const path = require('path')
 console.log(__dirname)
@@ -73,5 +82,13 @@ app.use(express.static(path.join(__dirname, "uploads")))
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "build", "index.html")) 
 })
+
+app.get('/check-session', (req, res) => {
+    if (req.session.user) {
+        res.json({ loggedIn: true, user: req.session.user });
+    } else {
+        res.json({ loggedIn: false, user: null });
+    }
+});
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
