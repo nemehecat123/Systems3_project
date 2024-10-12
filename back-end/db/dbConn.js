@@ -49,9 +49,9 @@ dataPool.checkUsernameExists = (username) => {
   }); 
 };
 
-dataPool.getAllNotesForUser = (userId) => {
+dataPool.getAllClassesForUser = (userId) => {
   return new Promise((resolve, reject) => {
-      conn.query('SELECT * FROM notes WHERE id = ?', [userId], (err, res) => {
+      conn.query('SELECT * FROM classes WHERE id_users = ?', [userId], (err, res) => {
           if (err) return reject(err);
           return resolve(res);
       });
@@ -59,33 +59,3 @@ dataPool.getAllNotesForUser = (userId) => {
 };
 module.exports = dataPool;
 
-
-
-
-
-// dataPool.allNovice=()=>{
-//   return new Promise ((resolve, reject)=>{
-//     conn.query(`SELECT * FROM news`, (err,res)=>{
-//       if(err){return reject(err)}
-//       return resolve(res)
-//     })
-//   })
-// }
-
-// dataPool.oneNovica=(id)=>{
-//   return new Promise ((resolve, reject)=>{
-//     conn.query(`SELECT * FROM news WHERE id = ?`, id, (err,res)=>{
-//       if(err){return reject(err)}
-//       return resolve(res)
-//     })
-//   })
-// }
-
-// dataPool.creteNovica=(title,slug,text,file)=>{
-//   return new Promise ((resolve, reject)=>{
-//     conn.query(`INSERT INTO news (title,slug,text, file) VALUES (?,?,?,?)`, [title, slug, text, file], (err,res)=>{
-//       if(err){return reject(err)}
-//       return resolve(res)
-//     })
-//   })
-// }

@@ -24,19 +24,17 @@ let upload_dest = multer({ dest: 'uploads/notes/' });
 // Route to get all notes for the logged-in user
 notes.get('/', async (req, res, next) => {
   const authHeader = req.headers['authorization']; // Get the Authorization header
-  const token = authHeader.split(' ')[1];
+  const UserID = authHeader.split(' ')[1];
 
-  DB.createNoviceTable();
-  
   console.log(DB)
-  // try {
-    //     const queryResult = await DB.getAllNotesForUser(token);
-    //     res.json(queryResult);
-    // } catch (err) {
-    //     console.log(err);
-    //     res.status(500).json({ success: false, msg: "Server error" });
-    //     next();
-    // }
+  try {
+        const queryResult = await DB.getAllClassesForUser(UserID);
+        res.json(queryResult);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ success: false, msg: "Server error" });
+        next();
+    }
 });
 
 
