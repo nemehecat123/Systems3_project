@@ -25,10 +25,10 @@ let upload_dest = multer({ dest: 'uploads/notes/' });
 notes.get('/', async (req, res, next) => {
   const authHeader = req.headers['authorization']; // Get the Authorization header
   const UserID = authHeader.split(' ')[1];
-
-  console.log(DB)
+  console.log(UserID);
   try {
         const queryResult = await DB.getAllClassesForUser(UserID);
+        console.log(queryResult);
         res.json(queryResult);
     } catch (err) {
         console.log(err);
@@ -36,12 +36,5 @@ notes.get('/', async (req, res, next) => {
         next();
     }
 });
-
-
-
-
-
-
-
 
 module.exports = notes;
