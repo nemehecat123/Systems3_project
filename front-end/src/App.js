@@ -1,13 +1,13 @@
 import { Component } from "react";
-import { ABOUT, NOVICE, ADDNEW, SIGNUP, LOGIN, HOME, LOGOUT, UPLOAD, MYNOTES } from "./Utils/Constants"
+import { ABOUT, NOVICE, ADDNEW, SIGNUP, LOGIN, HOME, LOGOUT, UPLOAD, MYNOTES, SINGLENOTE } from "./Utils/Constants"
 import HomeView from "./CustomComponents/HomeView";
 import AboutView from "./CustomComponents/AboutView";
 import AddNovicaView from "./CustomComponents/AddNovicaView";
 import SignupView from "./CustomComponents/SignupView";
 import LoginView from "./CustomComponents/LoginView";
-import SingleNovicaView from "./CustomComponents/SingleNovicaView";
 import FilesUploadComponent from "./CustomComponents/FilesUpload";
 import MyNotesView from "./CustomComponents/MyNotesView";
+import SingleNoteView from "./CustomComponents/SingleNoteView";
 import axios from "axios";
 import { API_URL } from "./Utils/Configuration";
 import Cookies from 'universal-cookie';
@@ -44,7 +44,9 @@ class App extends Component {
       case UPLOAD:
         return <FilesUploadComponent />;
       case MYNOTES:
-        return <MyNotesView />;
+        return <MyNotesView user={this.state.user}/>;
+        case SINGLENOTE:
+          return <SingleNoteView user={this.state.user}/>;
       default:
         return <HomeView />;
     }
@@ -73,7 +75,9 @@ class App extends Component {
   };
 
   QSetLoggedIn = (userData) => {
-    this.setState({ loggedIn: true, user: userData, CurrentPage: HOME });
+    this.setState({ loggedIn: true, user: userData, CurrentPage: HOME }, () => {
+      console.log(this.state.user); // This will now log the correct user object
+    });
   };
 
   render() {

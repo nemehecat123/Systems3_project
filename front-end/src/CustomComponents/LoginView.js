@@ -64,10 +64,11 @@ class LoginView extends React.Component {
           console.log(response.data)
           this.setState(this.state.status = response.data.status)
           this.setState(this.state.user = response.data.user)
+          console.log("data from server about the user")
           console.log(response.data.user)
           if (this.state.status.success) {
             this.props.QUserFromChild(response.data.user); // Pass user data to parent component
-            cookies.set("authToken", response.data.user.id, { path: "/", maxAge: 86400 }); // 1-day expiry
+            cookies.set("authToken", response.data.user, { path: "/", maxAge: 86400 }); // 1-day expiry
           } 
         } else {
           console.log("Something is really wrong, DEBUG!")
@@ -98,16 +99,10 @@ class LoginView extends React.Component {
               className="form-control"
               id="exampleInputPassword1" />
           </div>
-           {/* TODO: Add checkbox using bootstrap and link onChange to a function that sets the state of remember_me*/}
         </form>
         <button style={{ margin: "10px" }} onClick={() => this.QPostLogin()}
           className="btn btn-primary bt">Sign</button>
 
-        {/* TODO: We should display error to the user if something went wrong or a
-        success message  if an item was added. Use paragraph with the following classNmes:
-        => no success: <p className="alert alert-danger" role="alert"> 
-        => success: <p className="alert alert-success" role="alert"> 
-        */}
         {this.state.status.success ?
           <p className="alert alert-success"
             role="alert">{this.state.status.msg}</p> : null}

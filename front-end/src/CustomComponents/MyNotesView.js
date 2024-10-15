@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { API_URL } from "../Utils/Configuration";
 import Cookies from 'universal-cookie';
+import { SINGLENOTE } from '../Utils/Constants';
 
 const cookies = new Cookies();
 class MyNotesView extends React.Component {
@@ -10,11 +11,6 @@ class MyNotesView extends React.Component {
 constructor(props) {
     super(props);
     this.state = {
-      user_input: {
-        username: "",
-        password: ""
-      },
-      user: null,
       status: {
         success: null,
         msg: ""
@@ -27,18 +23,20 @@ constructor(props) {
 
 
   componentDidMount() {
+    console.log(this.state.user)
     this.fetchNotes();
   }
 
   fetchNotes = async () => {
     try {
       const token = cookies.get('authToken');
-      console.log('Token from cookie:', token);
+      console.log('(MyNotesView )---Token from cookie:', token);
+      console.log(token.id_users)
 
       // Making the request to the API with the token in the Authorization header
       const response = await axios.get(API_URL + '/notes', {
         headers: {
-          'Authorization': `Bearer ${token}`,  // Send token in the Authorization header
+          'Authorization': `Bearer ${token.id_users}`,  // Send token in the Authorization header
         },
         withCredentials: true,  // Ensure cookies are sent with the request
       });
@@ -71,12 +69,20 @@ constructor(props) {
         <div className="row">
           {notes.length > 0 ? (
             notes.map((note) => (
-              <div className="col-md-4" key={note.id}>
+              
+              <div className="col-md-4" key={note.id_classes }>
                 <div className="card">
                   <div className="card-body">
-                    <h5 className="card-title">{note.title}</h5>
+                    <h5 className="card-title">{note.name_classes}</h5>
                     <p className="card-text">{note.description}</p>
-                    <a href={`/notes/${note.id}`} className="btn btn-primary">
+                      <a
+                      onClick={(e) => {
+                        e.preventDefault(); // Prevent the default anchor behavior
+                        this.QSetView({ page: SINGLENOTE }); // Call your function
+                      }}
+                      className="nav-link"
+                      class="link-primary"
+                    >
                       View Note
                     </a>
                   </div>

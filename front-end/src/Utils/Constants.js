@@ -8,4 +8,6 @@ export const HOME = 'home';
 export const UPLOAD = 'upload';
 export const LOGOUT = 'logout';
 export const MYNOTES = 'MyNotes';
+export const SINGLENOTE = 'MyNotes';
+
 
