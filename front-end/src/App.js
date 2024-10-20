@@ -44,22 +44,31 @@ class App extends Component {
       case UPLOAD:
         return <FilesUploadComponent />;
       case MYNOTES:
-        return <MyNotesView user={this.state.user}/>;
+        return <MyNotesView user={this.state.user} QSetView={this.QSetView}/>;
         case SINGLENOTE:
-          return <SingleNoteView user={this.state.user}/>;
+          console.log("INSIDE THE CASE CONDITION")
+          if (!this.state.noteId) {
+
+            return <div>No note selected</div>; // Handle case if no noteId is provided
+          }
+          return <SingleNoteView noteId={this.state.noteId} />;
       default:
         return <HomeView />;
     }
   };
 
   QSetView = (obj) => {
-    this.setState(this.state.status = { success: null, msg: "" })
+    console.log("(QsetView in ap.js ) obj.noteId :  "+ obj.noteId)
 
-    console.log("QSetView");
+    console.log(obj)
     this.setState({
       CurrentPage: obj.page,
-      Novica: obj.id || 0
-    });
+      noteId: obj.noteId || null,
+      }, () => {
+          // This callback will be executed after the state has been updated
+          console.log("State after QSetView:", this.state);
+      });
+    
   };
 
   QLogout = () => {
