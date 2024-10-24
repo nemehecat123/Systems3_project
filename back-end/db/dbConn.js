@@ -57,5 +57,14 @@ dataPool.getAllClassesForUser = (userId) => {
       });
   });
 };
+
+dataPool.getAllNotesForUser = (id_classes) => {
+  return new Promise((resolve, reject) => {
+    conn.query('SELECT * FROM notes WHERE id_classes = ?', [id_classes], (err, res) => {
+        if (err) return reject(err);
+        return resolve(res);
+    });
+});
+}
 module.exports = dataPool;
 
