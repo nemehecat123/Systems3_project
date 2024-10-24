@@ -18,33 +18,31 @@ class SingleNoteView extends React.Component {
 
   componentDidMount() {
     this.fetchNote();
-    console.log("SingleNoteView mounted with noteId:", this.state.noteId);
   }
 
   fetchNote = async () => {
-    console.log("this.prps inside singlenoteView "+this.props);
     const { noteId } = this.props;  // Get the noteId passed from props
     try {
       const token = cookies.get('authToken');  // Retrieve the auth token from cookies
 
       // Make an API call to get the specific note by ID
-      const response = await axios.get(`${API_URL}/notes/${noteId}`, {
+      const response = await axios.get(API_URL + '/notes/getNotes ', {
         headers: {
-          'Authorization': `Bearer ${token.id_users}`,  // Send token in Authorization header
+          'Authorization': `Bearer ${noteId}`,  // Send token in Authorization header
         },
+        responseType:'blob',
         withCredentials: true,  // Ensure cookies are sent with the request
       });
-
       // Update the state with the fetched note data
       this.setState({ note: response.data, loading: false });
     } catch (err) {
       // Handle errors and update the error state
       this.setState({ error: 'Failed to fetch note', loading: false });
+
     }
   };
 
   render() {
-    console.log(" on themoney babyy");
     const { loading, error, note } = this.state;
 
     // Show loading indicator
@@ -61,15 +59,16 @@ class SingleNoteView extends React.Component {
     if (!note) {
       return <div>No note found</div>;
     }
+    
 
     // Render the note details
     return (
       <div className="container">
-        <h2>{note.name_classes}</h2>  {/* Show the note's name or title */}
+        <h2></h2>  {/* Show the note's name or title */}
         <p>{note.description}</p>     {/* Show the note's description */}
         <div>
           <p>Content:</p>
-          <p>{note.content}</p>       {/* Show the note's content or other details */}
+          {/* <p>{note.Blob_Note.data}</p>       Show the note's content or other details */}
         </div>
       </div>
     );
