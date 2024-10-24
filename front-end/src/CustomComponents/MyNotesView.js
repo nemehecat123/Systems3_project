@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import { API_URL } from "../Utils/Configuration";
 import Cookies from 'universal-cookie';
 import { SINGLENOTE } from '../Utils/Constants';
@@ -31,7 +32,6 @@ constructor(props) {
     try {
       const token = cookies.get('authToken');
       console.log('(MyNotesView )---Token from cookie:', token);
-      console.log(token.id_users)
 
       // Making the request to the API with the token in the Authorization header
       const response = await axios.get(API_URL + '/notes', {
@@ -40,7 +40,6 @@ constructor(props) {
         },
         withCredentials: true,  // Ensure cookies are sent with the request
       });
-      console.log('Response:', response.data.notes);
 
       // Updating state with the fetched notes
       this.setState({ notes: response.data, loading: false });
@@ -75,13 +74,12 @@ constructor(props) {
                   <div className="card-body">
                     <h5 className="card-title">{note.name_classes}</h5>
                     <p className="card-text">{note.description}</p>
-                      <a
+                    <a
                       onClick={(e) => {
-                        e.preventDefault(); // Prevent the default anchor behavior
-                        this.QSetView({ page: SINGLENOTE }); // Call your function
+                        e.preventDefault();
+                        this.props.QSetView({ page: SINGLENOTE, noteId: note.id_classes }); // Pass noteId to QSetView
                       }}
-                      className="nav-link"
-                      class="link-primary"
+                      className="nav-link link-primary"
                     >
                       View Note
                     </a>
@@ -97,4 +95,9 @@ constructor(props) {
     );
   }
 }
+
+  
+MyNotesView.propTypes = {
+  QUserFromChildNote: PropTypes.func.isRequired,
+};
 export default MyNotesView;
