@@ -49,15 +49,16 @@ notes.get('/getNotes', async (req, res, next) => {
       return res.status(404).json({ success: false, msg: "Note not found" });
     }
 
-    const fileData = queryResult[0].file_blob;  // Assuming the file blob is stored in a `file_blob` column
-    const fileName = queryResult[0].file_name || 'downloaded_file';  // Assuming you store the filename too
+    const fileData = queryResult[2].Blob_Note;  // Assuming the file blob is stored in a `file_blob` column
+    const fileType = 'image/png';
 
     // Setting headers to return the file correctly
-    res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
-    res.setHeader('Content-Type', 'application/octet-stream');
+    res.setHeader('Content-Type', fileType);
+    res.setHeader('Content-Length', fileData.length);
 
-    // Return the note data
-    res.json(queryResult[0]);
+    // Send the binary data directly
+    res.end(fileData, 'binary');
+
   } catch (err) {
     console.log(err);
     res.status(500).json({ success: false, msg: "Server error" });
