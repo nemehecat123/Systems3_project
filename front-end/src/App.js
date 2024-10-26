@@ -46,11 +46,6 @@ class App extends Component {
       case MYNOTES:
         return <MyNotesView user={this.state.user} QSetView={this.QSetView}/>;
         case SINGLENOTE:
-          console.log("INSIDE THE CASE CONDITION")
-          if (!this.state.noteId) {
-
-            return <div>No note selected</div>; // Handle case if no noteId is provided
-          }
           return <SingleNoteView noteId={this.state.noteId} />;
       default:
         return <HomeView />;
