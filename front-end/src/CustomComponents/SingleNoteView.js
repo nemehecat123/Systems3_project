@@ -34,7 +34,11 @@ class SingleNoteView extends React.Component {
         withCredentials: true,  // Ensure cookies are sent with the request
       });
       // Update the state with the fetched note data
-      this.setState({ note: response.data, loading: false });
+      console.log(response.data);
+      const imageUrl = URL.createObjectURL(response.data);
+      // Update the state with the image URL and stop the loading state
+      this.setState({ imageUrl, loading: false });
+
     } catch (err) {
       // Handle errors and update the error state
       this.setState({ error: 'Failed to fetch note', loading: false });
@@ -43,34 +47,22 @@ class SingleNoteView extends React.Component {
   };
 
   render() {
-    const { loading, error, note } = this.state;
+    const { loading, error, imageUrl } = this.state;
 
     // Show loading indicator
-    if (loading) {
-      return <div>Loading...</div>;
-    }
+    if (loading) {return <div>Loading...</div>;}
 
     // Show error message if an error occurred
-    if (error) {
-      return <div>{error}</div>;
-    }
+    if (error) {return <div>{error}</div>;}
 
     // If note is null or undefined, show a fallback message
-    if (!note) {
-      return <div>No note found</div>;
-    }
-    
-
+    if (!imageUrl) {return <div>No note found</div>;}
+    console.log(imageUrl)
     // Render the note details
     return (
-      <div className="container">
-        <h2></h2>  {/* Show the note's name or title */}
-        <p>{note.description}</p>     {/* Show the note's description */}
-        <div>
-          <p>Content:</p>
-          {/* <p>{note.Blob_Note.data}</p>       Show the note's content or other details */}
+        <div className="container">
+        <img src={imageUrl} alt="Uploaded Note" style={{ maxWidth: '100%' }} />
         </div>
-      </div>
     );
   }
 }
