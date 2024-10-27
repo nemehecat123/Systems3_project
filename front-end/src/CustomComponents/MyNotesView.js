@@ -68,7 +68,7 @@ class MyNotesView extends React.Component {
   <div className="row"> {/* Changed to row for Bootstrap grid */}
     {notes.length > 0 ? (
       notes.map((note) => (
-        <div className="col-md-6 mb-10" key={note.id_classes}>
+        <div className="col-md-6 mb-4" key={note.id_classes}>
           <div className="card h-100"> {/* Added h-100 to make cards equal height */}
             <div className="card-body">
               <h5 className="card-title">{note.name_classes}</h5>
