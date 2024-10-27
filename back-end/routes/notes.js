@@ -41,7 +41,6 @@ notes.get('/', async (req, res, next) => {
 notes.get('/getNotes', async (req, res, next) => {
     const authHeader = req.headers['authorization']; // Get the Authorization header
   const id_classes = authHeader.split(' ')[1]; // Extract user ID from token
-  console.log("id_classes :", id_classes);
 
   try {
     const queryResult = await DB.getAllNotesForUser(id_classes); // id_classes stevilko rabis da vidis "Listek"
@@ -49,16 +48,16 @@ notes.get('/getNotes', async (req, res, next) => {
       return res.status(404).json({ success: false, msg: "Note not found" });
     }
 
-    const fileData = queryResult[2].Blob_Note;  // Assuming the file blob is stored in a `file_blob` column
-    const fileType = 'image/png';
+    const images = queryResult.map((note) => ({
+        data: note.Blob_Note.toString('base64'), // Convert to base64
+        fileName: note.file_name || 'image.png',  // Optional filename
+        description: note.description,            // Optional metadata, e.g., description
+        fileType: 'image/png'                     // Assuming all are PNGs, adapt if needed
+      }));
 
-    // Setting headers to return the file correctly
-    res.setHeader('Content-Type', fileType);
-    res.setHeader('Content-Length', fileData.length);
-
-    // Send the binary data directly
-    res.end(fileData, 'binary');
-
+      // Send back an array of images
+    res.json({ success: true, images });
+    
   } catch (err) {
     console.log(err);
     res.status(500).json({ success: false, msg: "Server error" });
