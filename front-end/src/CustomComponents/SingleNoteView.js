@@ -57,13 +57,17 @@ class SingleNoteView extends React.Component {
     if (!images.length) return <div>No images found</div>;
 
     return (
-      <div className="container">
-        <h2>Note Images</h2>
-        <div className="row">
+        <div className="container">
+        <h2>Uploaded Images</h2>
+        <div className="d-flex flex-column align-items-center"> {/* Center each image */}
           {images.map((imageUrl, index) => (
-            <div className="col-md-4" key={index}>
-              <img src={imageUrl} alt={`Note ${index + 1}`} style={{ maxWidth: '100%', marginBottom: '20px' }} />
-            </div>
+            <img
+              key={index}
+              src={imageUrl}
+              alt={`Uploaded Note ${index + 1}`}
+              className="img-fluid mb-4"
+              style={{ maxWidth: '80%', borderRadius: '8px' }} // Centered, with some styling
+            />
           ))}
         </div>
       </div>

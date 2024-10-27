@@ -9,16 +9,16 @@ const cookies = new Cookies();
 class MyNotesView extends React.Component {
 
 
-constructor(props) {
+  constructor(props) {
     super(props);
     this.state = {
       status: {
         success: null,
         msg: ""
       },
-      notes: [],       
-      loading: true,    
-      error: null        
+      notes: [],
+      loading: true,
+      error: null
     }
   }
 
@@ -48,8 +48,8 @@ constructor(props) {
       // Handling errors and setting the error state
       this.setState({ error: 'Failed to fetch notes', loading: false });
     }
-  };render() {
-    const { loading, error, notes  } = this.state;
+  }; render() {
+    const { loading, error, notes } = this.state;
 
     // Show loading indicator
     if (loading) {
@@ -64,39 +64,38 @@ constructor(props) {
     // Render the list of notes or a message if no notes are available
     return (
       <div className="container">
-        <h2>My Uploaded Notes</h2>
-        <div className="row">
-          {notes.length > 0 ? (
-            notes.map((note) => (
-              
-              <div className="col-md-4" key={note.id_classes }>
-                <div className="card">
-                  <div className="card-body">
-                    <h5 className="card-title">{note.name_classes}</h5>
-                    <p className="card-text">{note.description}</p>
-                    <a
-                      onClick={(e) => {
-                        e.preventDefault();
-                        this.props.QSetView({ page: SINGLENOTE, noteId: note.id_classes }); // Pass noteId to QSetView
-                      }}
-                      className="nav-link link-primary"
-                    >
-                      View Note
-                    </a>
-                  </div>
-                </div>
-              </div>
-            ))
-          ) : (
-            <p>No notes uploaded yet.</p>
-          )}
+  <h2>My Uploaded Notes</h2>
+  <div className="row"> {/* Changed to row for Bootstrap grid */}
+    {notes.length > 0 ? (
+      notes.map((note) => (
+        <div className="col-md-6 mb-10" key={note.id_classes}>
+          <div className="card h-100"> {/* Added h-100 to make cards equal height */}
+            <div className="card-body">
+              <h5 className="card-title">{note.name_classes}</h5>
+              <p className="card-text">{note.description}</p>
+              <a
+                onClick={(e) => {
+                  e.preventDefault();
+                  this.props.QSetView({ page: SINGLENOTE, noteId: note.id_classes });
+                }}
+                className="nav-link link-primary"
+              >
+                View Note
+              </a>
+            </div>
+          </div>
         </div>
-      </div>
+      ))
+    ) : (
+      <p>No notes uploaded yet.</p>
+    )}
+  </div>
+</div>
     );
   }
 }
 
-  
+
 MyNotesView.propTypes = {
   QUserFromChildNote: PropTypes.func.isRequired,
 };
