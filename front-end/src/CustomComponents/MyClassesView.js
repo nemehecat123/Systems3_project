@@ -3,10 +3,12 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { API_URL } from "../Utils/Configuration";
 import Cookies from 'universal-cookie';
-import { SINGLENOTE } from '../Utils/Constants';
+import { CREATECLASS, SINGLENOTE } from '../Utils/Constants';
+import { CREATENOTE } from '../Utils/Constants';
+
 
 const cookies = new Cookies();
-class MyNotesView extends React.Component {
+class MyClassesView extends React.Component {
 
 
   constructor(props) {
@@ -31,7 +33,7 @@ class MyNotesView extends React.Component {
   fetchNotes = async () => {
     try {
       const token = cookies.get('authToken');
-      console.log('(MyNotesView )---Token from cookie:', token);
+      console.log('(MyClassesView )---Token from cookie:', token);
 
       // Making the request to the API with the token in the Authorization header
       const response = await axios.get(API_URL + '/notes', {
@@ -64,8 +66,22 @@ class MyNotesView extends React.Component {
     // Render the list of notes or a message if no notes are available
     return (
       <div className="container">
-  <h2>My Uploaded Notes</h2>
+  <h2>My Uploaded Classes</h2>
   <div className="row"> {/* Changed to row for Bootstrap grid */}
+
+  <div className="col-md-6 mb-4">
+            <div
+              className="card create-note-card text-center p-4"
+            
+              onClick={() => this.props.QSetView({ page: CREATECLASS })} // Redirect to create note page
+            >
+              <div className="card-body">
+                <h5 className="card-title">Create a new Class</h5>
+                <button className="btn btn-primary">Create Note</button>
+              </div>
+            </div>
+          </div>
+
     {notes.length > 0 ? (
       notes.map((note) => (
         <div className="col-md-6 mb-4" key={note.id_classes}>
@@ -78,9 +94,10 @@ class MyNotesView extends React.Component {
                   e.preventDefault();
                   this.props.QSetView({ page: SINGLENOTE, noteId: note.id_classes });
                 }}
+                style={{ cursor: 'pointer' }}
                 className="nav-link link-primary"
               >
-                View Note
+                View Class
               </a>
             </div>
           </div>
@@ -96,7 +113,7 @@ class MyNotesView extends React.Component {
 }
 
 
-MyNotesView.propTypes = {
+MyClassesView.propTypes = {
   QUserFromChildNote: PropTypes.func.isRequired,
 };
-export default MyNotesView;
+export default MyClassesView;

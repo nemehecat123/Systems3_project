@@ -1,13 +1,14 @@
 import { Component } from "react";
-import { ABOUT, NOVICE, ADDNEW, SIGNUP, LOGIN, HOME, LOGOUT, UPLOAD, MYNOTES, SINGLENOTE } from "./Utils/Constants"
+import { ABOUT, NOVICE, ADDNEW, SIGNUP, LOGIN, HOME, LOGOUT, UPLOAD, MYCLASSES, SINGLENOTE, CREATECLASS } from "./Utils/Constants"
 import HomeView from "./CustomComponents/HomeView";
 import AboutView from "./CustomComponents/AboutView";
 import AddNovicaView from "./CustomComponents/AddNovicaView";
 import SignupView from "./CustomComponents/SignupView";
 import LoginView from "./CustomComponents/LoginView";
 import FilesUploadComponent from "./CustomComponents/FilesUpload";
-import MyNotesView from "./CustomComponents/MyNotesView";
+import MyClassesView from "./CustomComponents/MyClassesView";
 import SingleNoteView from "./CustomComponents/SingleNoteView";
+import CreateClassView from "./CustomComponents/CreateClassView";
 import axios from "axios";
 import { API_URL } from "./Utils/Configuration";
 import Cookies from 'universal-cookie';
@@ -41,10 +42,10 @@ class App extends Component {
         return <LoginView QUserFromChild={this.QSetLoggedIn} />;
       case LOGOUT:
         return <HomeView />;
-      case UPLOAD:
-        return <FilesUploadComponent />;
-      case MYNOTES:
-        return <MyNotesView user={this.state.user} QSetView={this.QSetView}/>;
+      case CREATECLASS:
+        return <CreateClassView />;
+      case MYCLASSES:
+        return <MyClassesView user={this.state.user} QSetView={this.QSetView}/>;
         case SINGLENOTE:
           return <SingleNoteView noteId={this.state.noteId} />;
       default:
@@ -145,11 +146,11 @@ class App extends Component {
 
                     <li className="nav-item">
                       <a
-                        onClick={this.QSetView.bind(this, { page: MYNOTES })}
+                        onClick={this.QSetView.bind(this, { page: MYCLASSES })}
                         className="nav-link"
                         href="#"
                       >
-                        My Notes
+                        My Classes
                       </a>
                     </li>
                   </ul>

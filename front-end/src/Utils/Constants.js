@@ -7,7 +7,7 @@ export const NOVICA = 'novica';
 export const HOME = 'home';
 export const UPLOAD = 'upload';
 export const LOGOUT = 'logout';
-export const MYNOTES = 'MyNotes';
+export const MYCLASSES = 'MyClasses';
 export const SINGLENOTE = 'SingleNote';
-
+export const CREATECLASS = 'CreateClass';
 
