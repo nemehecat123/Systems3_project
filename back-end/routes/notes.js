@@ -42,6 +42,7 @@ notes.get('/getNotes', async (req, res, next) => {
     const authHeader = req.headers['authorization']; // Get the Authorization header
   const id_classes = authHeader.split(' ')[1]; // Extract user ID from token
 
+  console.log(id_classes +  ":  id classes ljudi hihihi")
   try {
     const queryResult = await DB.getAllNotesForUser(id_classes); // id_classes stevilko rabis da vidis "Listek"
     if (queryResult.length === 0) {
@@ -57,12 +58,38 @@ notes.get('/getNotes', async (req, res, next) => {
 
       // Send back an array of images
     res.json({ success: true, images });
-    
+
   } catch (err) {
     console.log(err);
     res.status(500).json({ success: false, msg: "Server error" });
     next();
       }
+  });
+
+  notes.post('/createNewClass', async (req, res) => {
+    const authHeader = req.headers['authorization']; // Get the Authorization header
+  const id_users = authHeader.split(' ')[1]; // Extract user ID from token
+    const { name, description, teacher, yearOfClass } = req.body;
+    
+    try {
+      const newNote = {
+        id_users,
+        name,
+        description,
+        teacher,
+        yearOfClass,
+      };
+
+      console.log(newNote);
+  
+
+ 
+      await DB.createNewClass(newNote); // Adjust this to match your database logic
+      res.status(201).json({ success: true, message: 'Note created successfully!' });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ success: false, message: 'Server error' });
+    }
   });
 
 module.exports = notes;

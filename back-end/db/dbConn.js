@@ -65,6 +65,19 @@ dataPool.getAllNotesForUser = (id_classes) => {
         return resolve(res);
     });
 });
-}
+};
+
+dataPool.createNewClass = (newNote) => {
+  return new Promise((resolve, reject) => {
+    const query = 'INSERT INTO classes (id_users, name_classes,teacher_name,  description , classes_year) VALUES (?, ?, ?, ?, ?)';
+    const values = [newNote.id_users ,newNote.name, newNote.teacher, newNote.description,  newNote.yearOfClass, ];
+
+    conn.query(query, values, (err, results) => {
+      if (err) return reject(err);
+      resolve(results);
+    });
+  });
+};
+
 module.exports = dataPool;
 
