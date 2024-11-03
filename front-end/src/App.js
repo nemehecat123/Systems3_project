@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { ABOUT, NOVICE, ADDNEW, SIGNUP, LOGIN, HOME, LOGOUT, UPLOAD, MYCLASSES, SINGLENOTE, CREATECLASS, ADDNEWNOTE } from "./Utils/Constants"
+import { ABOUT, NOVICE, ADDNEW, SIGNUP, LOGIN, HOME, LOGOUT, UPLOAD, MYCLASSES, SINGLENOTE, CREATECLASS, ADDNEWNOTE, SEARCHVIEW } from "./Utils/Constants"
 import HomeView from "./CustomComponents/HomeView";
 import AboutView from "./CustomComponents/AboutView";
 import AddNovicaView from "./CustomComponents/AddNovicaView";
@@ -9,6 +9,8 @@ import AddNoteView from "./CustomComponents/AddNoteView";
 import MyClassesView from "./CustomComponents/MyClassesView";
 import SingleNoteView from "./CustomComponents/SingleNoteView";
 import CreateClassView from "./CustomComponents/CreateClassView";
+import SearchView from "./CustomComponents/SearchView";
+
 import axios from "axios";
 import { API_URL } from "./Utils/Configuration";
 import Cookies from 'universal-cookie';
@@ -45,11 +47,13 @@ class App extends Component {
       case CREATECLASS:
         return <CreateClassView />;
       case MYCLASSES:
-        return <MyClassesView user={this.state.user} QSetView={this.QSetView}/>;
-        case SINGLENOTE:
-          return <SingleNoteView noteId={this.state.noteId} QSetView={this.QSetView} />
-          case ADDNEWNOTE:
-            return <AddNoteView noteId = {this.state.noteId}/>
+        return <MyClassesView user={this.state.user} QSetView={this.QSetView} />;
+      case SINGLENOTE:
+        return <SingleNoteView noteId={this.state.noteId} QSetView={this.QSetView} />
+      case ADDNEWNOTE:
+        return <AddNoteView noteId={this.state.noteId} />
+      case SEARCHVIEW:
+        return <SearchView QSetView={this.QSetView} />;
       default:
         return <HomeView />;
     }
@@ -155,7 +159,19 @@ class App extends Component {
                         My Classes
                       </a>
                     </li>
+
+                    <li className="nav-item">
+                      <a
+                        onClick={this.QSetView.bind(this, { page: SEARCHVIEW })}
+                        className="nav-link"
+                        href="#"
+                      >
+                        Search Classes
+                      </a>
+                    </li>
+
                   </ul>
+                  
     
                   <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li className="nav-item">

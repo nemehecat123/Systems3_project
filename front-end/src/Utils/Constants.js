@@ -11,4 +11,6 @@ export const MYCLASSES = 'MyClasses';
 export const SINGLENOTE = 'SingleNote';
 export const CREATECLASS = 'CreateClass';
 export const ADDNEWNOTE = 'AddNewNote';
+export const SEARCHVIEW = 'SearchView';
+
 
