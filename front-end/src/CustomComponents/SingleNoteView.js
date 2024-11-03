@@ -50,6 +50,24 @@ class SingleNoteView extends React.Component {
     }
   };
 
+  handleDelete = async () => {
+    const { noteId } = this.props;
+    try {
+      console.log("do tukej pride inside try pogoja")
+      await axios.delete(API_URL + '/notes/deleteClass', {
+        data: { id: noteId },
+      });
+      alert("Class deleted successfully");
+      this.props.QSetView({ page: "MyClasses" }); // Redirect to Home or another view
+    } catch (error) {
+      console.error("Delete error:", error.message);
+      this.setState({ error: "Failed to delete class." });
+      this.props.QSetView({ page: "MyClasses" }); // Redirect to Home or another view
+
+    }
+  };
+
+
   render() {
     const { loading, error, images } = this.state;
 
@@ -101,6 +119,8 @@ class SingleNoteView extends React.Component {
             />
           ))}
         </div>
+
+        <button onClick={this.handleDelete} className="btn btn-danger mt-3">Delete Class</button>
       </div>
     );
   }
