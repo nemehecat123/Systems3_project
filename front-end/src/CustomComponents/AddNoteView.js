@@ -60,35 +60,12 @@ class AddNoteView extends React.Component {
     };
 
     render() {
-        const { noteTitle, noteContent, success, error } = this.state;
+        const { success, error } = this.state;
 
         return (
             <div className="container">
                 <h2>Add a New Note with Images</h2>
                 <form onSubmit={this.handleSubmit}>
-                    <div className="form-group">
-                        <label>Note Title</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            name="noteTitle"
-                            value={noteTitle}
-                            onChange={this.handleInputChange}
-                            required
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label>Note Content</label>
-                        <textarea
-                            className="form-control"
-                            name="noteContent"
-                            value={noteContent}
-                            onChange={this.handleInputChange}
-                            rows="4"
-                            required
-                        ></textarea>
-                    </div>
 
                     <div className="form-group">
                         <label>Upload Images</label>
