@@ -3,7 +3,7 @@ const notes = express.Router();
 const DB = require('../db/dbConn.js');
 const multer = require("multer");
 const cookieParser = require('cookie-parser');
-
+const upload = multer({ storage: multer.memoryStorage() });
 const jwt = require('jsonwebtoken');
 const app = express()
 
@@ -91,5 +91,37 @@ notes.get('/getNotes', async (req, res, next) => {
       res.status(500).json({ success: false, message: 'Server error' });
     }
   });
+
+
+
+
+  notes.post('/addNoteWithImages', upload.array('images'), async (req, res) => {
+    const authHeader = req.headers['authorization'];
+    const id_classes = authHeader.split(' ')[1];
+  
+    const imageFiles = req.files; // Multer stores multiple files in req.files
+
+    console.log(id_classes);
+    console.log(imageFiles);
+  
+    try {
+      const newNote = {
+        id_classes,
+      };
+
+      const images = imageFiles.map((file) => file.buffer);
+
+  
+      // Assuming createNewNoteWithImages is a function to handle the images in your database
+      await DB.createNewNoteWithImages(newNote,images);
+  
+      res.status(201).json({ success: true, message: 'Note created successfully with images!' });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ success: false, message: 'Server error' });
+    }
+  });
+
+
 
 module.exports = notes;

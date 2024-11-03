@@ -79,5 +79,34 @@ dataPool.createNewClass = (newNote) => {
   });
 };
 
+dataPool.createNewNoteWithImages = (newNote, images) => {
+  return new Promise((resolve, reject) => {
+    // Loop through each image and insert it as a new row in the `notes` table
+    const insertImagePromises = images.map((image) => {
+      return new Promise((imageResolve, imageReject) => {
+        const query = `
+          INSERT INTO notes (id_classes, Blob_Note, changed)
+          VALUES (?, ?, NOW())
+        `;
+        const values = [
+          newNote.id_classes,
+          image, // Image blob data
+        ];
+
+        conn.query(query, values, (err, result) => {
+          if (err) return imageReject(err);
+          imageResolve(result);
+        });
+      });
+    });
+
+    // Wait for all image inserts to complete
+    Promise.all(insertImagePromises)
+      .then((results) => resolve({ success: true, noteCount: results.length }))
+      .catch((err) => reject(err));
+  });
+};
+
+
 module.exports = dataPool;
 
