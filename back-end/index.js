@@ -55,7 +55,7 @@ app.use(session(sess))
 //Some configurations
 app.use(express.urlencoded({extended : true}));
 app.use(cors({
- methods:["GET", "POST"],
+ methods:["GET", "POST","DELETE"],
   credentials: true, 
   origin: ['http://localhost:3000','http://localhost:3001']
 }))

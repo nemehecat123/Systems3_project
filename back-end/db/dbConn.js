@@ -123,6 +123,16 @@ dataPool.searchClassesByName = (name) => {
   });
 };
 
+dataPool.deleteClass = (id) => {
+  return new Promise((resolve, reject) => {
+    const query = 'DELETE FROM classes WHERE id_classes = ?';
+    conn.query(query, [id], (err, results) => {
+      if (err) return reject(err);
+      resolve(results);
+    });
+  });
+};
+
 
 module.exports = dataPool;
 
