@@ -10,12 +10,12 @@ class CreateClassView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        name: '',
-        description: '',
-        teacher: '',
-        yearOfClass: '',
-        error: null,
-        success: null,  
+      name: '',
+      description: '',
+      teacher: '',
+      yearOfClass: '',
+      error: null,
+      success: null,
     };
   }
 
@@ -30,13 +30,13 @@ class CreateClassView extends React.Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-  
-    
+
+
     const token = cookies.get('authToken');
-    console.log('(CreateClassView )---Token from cookie:',token);
+    console.log('(CreateClassView )---Token from cookie:', token);
 
     try {
-      await axios.post(API_URL + '/notes/createNewClass', 
+      await axios.post(API_URL + '/notes/createNewClass',
         {
           name: this.state.name,
           description: this.state.description,
@@ -61,70 +61,70 @@ class CreateClassView extends React.Component {
 
     return (
       <div className="container">
-  <h2>Create a New Class</h2>
-  <form onSubmit={this.handleSubmit}>
-    
-    {/* Class Name */}
-    <div className="form-group">
-      <label>Class Name</label>
-      <input
-        type="text"
-        className="form-control"
-        name="name"
-        value={name}
-        onChange={this.handleInputChange}
-        required
-      />
-    </div>
-    
-    {/* Description */}
-    <div className="form-group">
-      <label>Description</label>
-      <textarea
-        className="form-control"
-        name="description"
-        value={description}
-        onChange={this.handleInputChange}
-        rows="4"
-        required
-      ></textarea>
-    </div>
-    
-    {/* Teacher */}
-    <div className="form-group">
-      <label>Teacher</label>
-      <input
-        type="text"
-        className="form-control"
-        name="teacher"
-        value={teacher}
-        onChange={this.handleInputChange}
-        required
-      />
-    </div>
-    
-    <div className="form-group">
-  <label>Year of the Class</label>
-  <div className="input-group">
-    <input
-      className="form-control"
-      name="yearOfClass"
-      value={yearOfClass}
-      onChange={this.handleInputChange}
-      required
-    />
-  </div>
-</div>
+        <h2>Create a New Class</h2>
+        <form onSubmit={this.handleSubmit}>
 
-    <button type="submit" className="btn btn-primary mt-3">Create Note</button>
+          {/* Class Name */}
+          <div className="form-group">
+            <label>Class Name</label>
+            <input
+              type="text"
+              className="form-control"
+              name="name"
+              value={name}
+              onChange={this.handleInputChange}
+              required
+            />
+          </div>
 
-    {/* Success and Error Messages */}
-    {success && <p className="text-success mt-3">{success}</p>}
-    {error && <p className="text-danger mt-3">{error}</p>}
-  </form>
+          {/* Description */}
+          <div className="form-group">
+            <label>Description</label>
+            <textarea
+              className="form-control"
+              name="description"
+              value={description}
+              onChange={this.handleInputChange}
+              rows="4"
+              required
+            ></textarea>
+          </div>
 
-  <button  className="btn btn-primary mt-3" onClick={console.log(this.state)}>naredi nekej</button>
-</div>
+          {/* Teacher */}
+          <div className="form-group">
+            <label>Teacher</label>
+            <input
+              type="text"
+              className="form-control"
+              name="teacher"
+              value={teacher}
+              onChange={this.handleInputChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Year of the Class</label>
+            <div className="input-group">
+              <input
+                className="form-control"
+                name="yearOfClass"
+                value={yearOfClass}
+                onChange={this.handleInputChange}
+                required
+              />
+            </div>
+          </div>
+
+          <button type="submit" className="btn btn-primary mt-3">Create Note</button>
+
+          {/* Success and Error Messages */}
+          {success && <p className="text-success mt-3">{success}</p>}
+          {error && <p className="text-danger mt-3">{error}</p>}
+        </form>
+
+        <button className="btn btn-primary mt-3" onClick={console.log(this.state)}>naredi nekej</button>
+      </div>
 
 
     );

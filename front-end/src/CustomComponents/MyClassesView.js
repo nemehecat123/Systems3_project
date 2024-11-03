@@ -65,13 +65,13 @@ class MyClassesView extends React.Component {
     // Render the list of notes or a message if no notes are available
     return (
       <div className="container">
-  <h2>My Uploaded Classes</h2>
-  <div className="row"> {/* Changed to row for Bootstrap grid */}
+        <h2>My Uploaded Classes</h2>
+        <div className="row"> {/* Changed to row for Bootstrap grid */}
 
-  <div className="col-md-6 mb-4">
+          <div className="col-md-6 mb-4">
             <div
               className="card create-note-card text-center p-4"
-            
+
               onClick={() => this.props.QSetView({ page: CREATECLASS })} // Redirect to create note page
             >
               <div className="card-body">
@@ -81,32 +81,32 @@ class MyClassesView extends React.Component {
             </div>
           </div>
 
-    {notes.length > 0 ? (
-      notes.map((note) => (
-        <div className="col-md-6 mb-4" key={note.id_classes}>
-          <div className="card h-100"> {/* Added h-100 to make cards equal height */}
-            <div className="card-body">
-              <h5 className="card-title">{note.name_classes}</h5>
-              <p className="card-text">{note.description}</p>
-              <a
-                onClick={(e) => {
-                  e.preventDefault();
-                  this.props.QSetView({ page: SINGLENOTE, noteId: note.id_classes });
-                }}
-                style={{ cursor: 'pointer' }}
-                className="nav-link link-primary"
-              >
-                View Class
-              </a>
-            </div>
-          </div>
+          {notes.length > 0 ? (
+            notes.map((note) => (
+              <div className="col-md-6 mb-4" key={note.id_classes}>
+                <div className="card h-100"> {/* Added h-100 to make cards equal height */}
+                  <div className="card-body">
+                    <h5 className="card-title">{note.name_classes}</h5>
+                    <p className="card-text">{note.description}</p>
+                    <a
+                      onClick={(e) => {
+                        e.preventDefault();
+                        this.props.QSetView({ page: SINGLENOTE, noteId: note.id_classes });
+                      }}
+                      style={{ cursor: 'pointer' }}
+                      className="nav-link link-primary"
+                    >
+                      View Class
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p>No notes uploaded yet.</p>
+          )}
         </div>
-      ))
-    ) : (
-      <p>No notes uploaded yet.</p>
-    )}
-  </div>
-</div>
+      </div>
     );
   }
 }

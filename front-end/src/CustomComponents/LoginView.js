@@ -57,7 +57,7 @@ class LoginView extends React.Component {
       {
         username: this.state.user_input.username,
         password: this.state.user_input.password
-      },{ withCredentials: true })
+      }, { withCredentials: true })
       .then(response => {
         console.log("Sent to server...")
         if (response.status == 200) {
@@ -69,7 +69,7 @@ class LoginView extends React.Component {
           if (this.state.status.success) {
             this.props.QUserFromChild(response.data.user); // Pass user data to parent component
             cookies.set("authToken", response.data.user, { path: "/", maxAge: 86400 }); // 1-day expiry
-          } 
+          }
         } else {
           console.log("Something is really wrong, DEBUG!")
         }

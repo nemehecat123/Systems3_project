@@ -33,14 +33,14 @@ class SignupView extends React.Component {
 
     // Simple validation logic
     if (!username || !email || !password) {
-        // Indicate missing fields
-        this.setState({ status: { success: false, msg: "All fields are required." } });
-        return;
+      // Indicate missing fields
+      this.setState({ status: { success: false, msg: "All fields are required." } });
+      return;
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-        this.setState({ status: { success: false, msg: "Please enter a valid email address." } });
-        return;
+      this.setState({ status: { success: false, msg: "Please enter a valid email address." } });
+      return;
     }
 
 
@@ -93,7 +93,7 @@ class SignupView extends React.Component {
         </form>
         <button style={{ margin: "10px" }} onClick={() => this.QPostSignup()}
           className="btn btn-primary bt">Submit</button>
-       
+
         {/* TODO: We should display error to the user if something went wrong or a
         success message  if an item was added. Use paragraph with the following classNmes:
           => no success: <p className="alert alert-danger" role="alert"> 
