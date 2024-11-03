@@ -74,20 +74,20 @@ class SingleNoteView extends React.Component {
     if (!images.length) return <div>No images found</div>;
 
     return (
-        <div className="container">
+      <div className="container">
         <div>
-        <div>
-          <a
-            onClick={(e) => {
-              e.preventDefault();
-              this.props.QSetView({ page: ADDNEWNOTE, noteId: this.props.noteId }); // Pass id_classes here
-            }}
-            style={{ cursor: 'pointer' }}
-            className="nav-link link-primary"
-          >
-            Add Note
-          </a>
-        </div>
+          <div>
+            <a
+              onClick={(e) => {
+                e.preventDefault();
+                this.props.QSetView({ page: ADDNEWNOTE, noteId: this.props.noteId }); // Pass id_classes here
+              }}
+              style={{ cursor: 'pointer' }}
+              className="nav-link link-primary"
+            >
+              Add Note
+            </a>
+          </div>
         </div>
         <h2>Uploaded Images</h2>
         <div className="d-flex flex-column align-items-center"> {/* Center each image */}
