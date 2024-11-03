@@ -137,6 +137,25 @@ notes.get('/getNotes', async (req, res, next) => {
         res.status(500).json({ success: false, message: "Server error" });
         }
     });
+
+
+    notes.delete('/deleteClass', async (req, res) => {
+        const { id } = req.body; // Get `id` directly from the request body
+      
+        try {
+          const result = await DB.deleteClass(id); // Pass the `id` variable from request body
+      
+          if (result.affectedRows === 0) {
+            return res.status(404).json({ success: false, message: "Class not found" });
+          }
+      
+          res.status(200).json({ success: true, message: "Class deleted successfully" });
+        } catch (error) {
+          console.error("Error deleting class:", error);
+          res.status(500).json({ success: false, message: "Failed to delete class" });
+        }
+      });
+
   
 
 
