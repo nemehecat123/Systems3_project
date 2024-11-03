@@ -123,5 +123,21 @@ notes.get('/getNotes', async (req, res, next) => {
   });
 
 
+  // Backend route to search for classes by name
+    notes.get('/searchClasses', async (req, res) => {
+        const { query } = req.query; // Get the search query from the request
+
+        console.log(query);
+    
+        try {
+        const searchResults = await DB.searchClassesByName(query);
+        res.status(200).json(searchResults);
+        } catch (err) {
+        console.error("Search error:", err);
+        res.status(500).json({ success: false, message: "Server error" });
+        }
+    });
+  
+
 
 module.exports = notes;

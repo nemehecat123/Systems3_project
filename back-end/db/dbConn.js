@@ -107,6 +107,22 @@ dataPool.createNewNoteWithImages = (newNote, images) => {
   });
 };
 
+dataPool.searchClassesByName = (name) => {
+  return new Promise((resolve, reject) => {
+    const query = `
+      SELECT classes.id_classes, classes.name_classes, classes.description, classes.teacher_name, users.user_name AS owner 
+      FROM classes 
+      JOIN users ON classes.id_users = users.id_users 
+      WHERE classes.name_classes LIKE ?
+    `;
+    const searchTerm = `%${name}%`;
+    conn.query(query, [searchTerm], (err, results) => {
+      if (err) return reject(err);
+      resolve(results);
+    });
+  });
+};
+
 
 module.exports = dataPool;
 
