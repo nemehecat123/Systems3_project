@@ -133,6 +133,16 @@ dataPool.deleteClass = (id) => {
   });
 };
 
+dataPool.deleteNote = (id) => {
+  return new Promise((resolve, reject) => {
+    const query = 'DELETE FROM notes WHERE id_notes = ?';  // Adjust table name and field accordingly
+    conn.query(query, [id], (err, results) => {
+      if (err) return reject(err);
+      resolve(results);
+    });
+  });
+};
+
 
 module.exports = dataPool;
 

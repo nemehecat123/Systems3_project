@@ -50,11 +50,13 @@ notes.get('/getNotes', async (req, res, next) => {
     }
 
     const images = queryResult.map((note) => ({
+        id_notes: note.id_notes, // Include id_notes in the response
         data: note.Blob_Note.toString('base64'), // Convert to base64
         fileName: note.file_name || 'image.png',  // Optional filename
         description: note.description,            // Optional metadata, e.g., description
         fileType: 'image/png'                     // Assuming all are PNGs, adapt if needed
-      }));
+    }));
+
 
       // Send back an array of images
     res.json({ success: true, images });
@@ -155,6 +157,25 @@ notes.get('/getNotes', async (req, res, next) => {
           res.status(500).json({ success: false, message: "Failed to delete class" });
         }
       });
+
+      notes.delete('/deleteNote', async (req, res) => {
+        const { id_notes } = req.body;  // Get the note ID from the request body
+        console.log(req.body)
+        
+        try {
+          const result = await DB.deleteNote(id_notes); // Ensure your DB function handles the delete correctly
+      
+          if (result.affectedRows === 0) {
+            return res.status(404).json({ success: false, message: "Note not found" });
+          }
+      
+          res.status(200).json({ success: true, message: "Note deleted successfully" });
+        } catch (error) {
+          console.error("Error deleting note:", error);
+          res.status(500).json({ success: false, message: "Failed to delete note" });
+        }
+      });
+      
 
   
 
