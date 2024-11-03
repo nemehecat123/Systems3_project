@@ -1,11 +1,11 @@
 import { Component } from "react";
-import { ABOUT, NOVICE, ADDNEW, SIGNUP, LOGIN, HOME, LOGOUT, UPLOAD, MYCLASSES, SINGLENOTE, CREATECLASS } from "./Utils/Constants"
+import { ABOUT, NOVICE, ADDNEW, SIGNUP, LOGIN, HOME, LOGOUT, UPLOAD, MYCLASSES, SINGLENOTE, CREATECLASS, ADDNEWNOTE } from "./Utils/Constants"
 import HomeView from "./CustomComponents/HomeView";
 import AboutView from "./CustomComponents/AboutView";
 import AddNovicaView from "./CustomComponents/AddNovicaView";
 import SignupView from "./CustomComponents/SignupView";
 import LoginView from "./CustomComponents/LoginView";
-import FilesUploadComponent from "./CustomComponents/FilesUpload";
+import AddNoteView from "./CustomComponents/AddNoteView";
 import MyClassesView from "./CustomComponents/MyClassesView";
 import SingleNoteView from "./CustomComponents/SingleNoteView";
 import CreateClassView from "./CustomComponents/CreateClassView";
@@ -47,7 +47,9 @@ class App extends Component {
       case MYCLASSES:
         return <MyClassesView user={this.state.user} QSetView={this.QSetView}/>;
         case SINGLENOTE:
-          return <SingleNoteView noteId={this.state.noteId} />;
+          return <SingleNoteView noteId={this.state.noteId} QSetView={this.QSetView} />
+          case ADDNEWNOTE:
+            return <AddNoteView noteId = {this.state.noteId}/>
       default:
         return <HomeView />;
     }

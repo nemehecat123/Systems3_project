@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { API_URL } from "../Utils/Configuration";
 import Cookies from 'universal-cookie';
 import { CREATECLASS, SINGLENOTE } from '../Utils/Constants';
-import { CREATENOTE } from '../Utils/Constants';
 
 
 const cookies = new Cookies();

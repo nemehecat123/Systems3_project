@@ -3,6 +3,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { API_URL } from "../Utils/Configuration";
 import Cookies from 'universal-cookie';
+import { ADDNEWNOTE } from '../Utils/Constants';
 
 const cookies = new Cookies();
 
@@ -53,11 +54,41 @@ class SingleNoteView extends React.Component {
     const { loading, error, images } = this.state;
 
     if (loading) return <div>Loading...</div>;
-    if (error) return <div>{error}</div>;
+    if (error) return <div>
+      <div>
+        {error}
+        <div>
+          <a
+            onClick={(e) => {
+              e.preventDefault();
+              this.props.QSetView({ page: ADDNEWNOTE, noteId: this.props.noteId }); // Pass id_classes here
+            }}
+            style={{ cursor: 'pointer' }}
+            className="nav-link link-primary"
+          >
+            Add Note
+          </a>
+        </div>
+      </div>
+    </div>;
     if (!images.length) return <div>No images found</div>;
 
     return (
         <div className="container">
+        <div>
+        <div>
+          <a
+            onClick={(e) => {
+              e.preventDefault();
+              this.props.QSetView({ page: ADDNEWNOTE, noteId: this.props.noteId }); // Pass id_classes here
+            }}
+            style={{ cursor: 'pointer' }}
+            className="nav-link link-primary"
+          >
+            Add Note
+          </a>
+        </div>
+        </div>
         <h2>Uploaded Images</h2>
         <div className="d-flex flex-column align-items-center"> {/* Center each image */}
           {images.map((imageUrl, index) => (
