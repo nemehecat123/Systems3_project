@@ -1,8 +1,7 @@
 import { Component } from "react";
-import { ABOUT, NOVICE, ADDNEW, SIGNUP, LOGIN, HOME, LOGOUT, UPLOAD, MYCLASSES, SINGLENOTE, CREATECLASS, ADDNEWNOTE, SEARCHVIEW } from "./Utils/Constants"
+import { ABOUT,SIGNUP, LOGIN, HOME, LOGOUT, MYCLASSES, SINGLENOTE, CREATECLASS, ADDNEWNOTE, SEARCHVIEW } from "./Utils/Constants"
 import HomeView from "./CustomComponents/HomeView";
 import AboutView from "./CustomComponents/AboutView";
-import AddNovicaView from "./CustomComponents/AddNovicaView";
 import SignupView from "./CustomComponents/SignupView";
 import LoginView from "./CustomComponents/LoginView";
 import AddNoteView from "./CustomComponents/AddNoteView";
@@ -36,8 +35,6 @@ class App extends Component {
     switch (page) {
       case ABOUT:
         return <AboutView />;
-      case ADDNEW:
-        return <AddNovicaView />;
       case SIGNUP:
         return <SignupView />;
       case LOGIN:
@@ -130,26 +127,6 @@ class App extends Component {
                       </a>
                     </li>
     
-                    <li className="nav-item">
-                      <a
-                        onClick={this.QSetView.bind(this, { page: ADDNEW })}
-                        className="nav-link"
-                        href="#"
-                      >
-                        Add news
-                      </a>
-                    </li>
-    
-                    <li className="nav-item">
-                      <a
-                        onClick={this.QSetView.bind(this, { page: UPLOAD })}
-                        className="nav-link"
-                        href="#"
-                      >
-                        Upload
-                      </a>
-                    </li>
-
                     <li className="nav-item">
                       <a
                         onClick={this.QSetView.bind(this, { page: MYCLASSES })}
