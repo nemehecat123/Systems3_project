@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { API_URL } from "../Utils/Configuration";
 import Cookies from 'universal-cookie';
 import { ADDNEWNOTE, MYCLASSES } from '../Utils/Constants';
-
+import AddComment from './AddComment'; // Adjust the path based on your project structure
+import CommentList from './CommentList'; // Adjust the path based on your project structure
 
 const cookies = new Cookies();
 
@@ -20,7 +21,13 @@ class SingleNoteView extends React.Component {
 
   componentDidMount() {
     this.fetchNotes();
+    console.log("console log inside SingleNoteVIew", this.props);
   }
+
+  handleCommentAdded = () => {
+    // Refresh comments when a new comment is added
+    this.commentListRef.fetchComments();
+  };
 
   fetchNotes = async () => {
     const { noteId } = this.props;
@@ -95,6 +102,8 @@ class SingleNoteView extends React.Component {
 
   render() {
     const { loading, error, images } = this.state;
+    console.log(this.props)
+    const { classId } = this.props.noteId;
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>
@@ -150,13 +159,19 @@ class SingleNoteView extends React.Component {
                 className="btn btn-danger position-absolute"
                 style={{ right: '10px', top: '10px' }} // Adjust positioning as needed
               >
-                Delete
+                Delete note
               </button>
             </div>
           ))}
         </div>
 
         <button onClick={this.handleDelete} className="btn btn-danger mt-3">Delete Class</button>
+        <div>
+          <AddComment classId={this.props.noteId} id_users={this.props.user.id_users} onCommentAdded={this.handleCommentAdded} />
+
+          <CommentList classId={this.props.noteId} id_users={this.props.user.id_users} ref={(ref) => this.commentListRef = ref} />
+        </div>
+
       </div>
     );
   }
