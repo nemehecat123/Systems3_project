@@ -143,6 +143,26 @@ dataPool.deleteNote = (id) => {
   });
 };
 
+dataPool.addComment = (newComment) => {
+  return new Promise((resolve, reject) => {
+      const query = 'INSERT INTO comments (id_classes, id_users, content,changed) VALUES (?, ?, ?, NOW())';
+      const values = [newComment.id_classes, newComment.id_users, newComment.content];
+
+      conn.query(query, values, (err, result) => {
+          if (err) return reject(err);
+          resolve(result);
+      });
+  });
+};
+
+dataPool.getCommentsForClass = (id_classes) => {
+  return new Promise((resolve, reject) => {
+      const query = 'SELECT * FROM comments WHERE id_classes = ? ORDER BY changed DESC';
+      conn.query(query, [id_classes], (err, results) => {
+          if (err) return reject(err);
+          resolve(results);
+      });
+  });
+};
 
 module.exports = dataPool;
-

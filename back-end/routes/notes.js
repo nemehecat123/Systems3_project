@@ -177,6 +177,40 @@ notes.get('/getNotes', async (req, res, next) => {
       });
       
 
+      notes.get('/getComments', async (req, res) => { // careful... you cant get req.body inside get parameter you need to add params
+        const { id_classes } = req.query; // Get id_classes from query parameters
+    
+        try {
+            const comments = await DB.getCommentsForClass(id_classes);
+    
+            if (comments.length === 0) {
+                return res.status(404).json({ success: false, message: 'No comments found for this class' });
+            }
+    
+            res.json({ success: true, comments });
+        } catch (error) {
+            console.error('Error fetching comments:', error);
+            res.status(500).json({ success: false, message: 'Failed to retrieve comments' });
+        }
+    });
+
+    notes.post('/addComment', async (req, res) => {
+      const { id_classes, id_users, content } = req.body;
+  
+      try {
+          const newComment = {
+              id_classes,
+              id_users,
+              content
+          };
+  
+          const result = await DB.addComment(newComment);
+          res.status(201).json({ success: true, message: 'Comment added successfully!' });
+      } catch (error) {
+          console.error('Error adding comment:', error);
+          res.status(500).json({ success: false, message: 'Failed to add comment' });
+      }
+  });
   
 
 
