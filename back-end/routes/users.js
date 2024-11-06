@@ -8,7 +8,6 @@ const SECRET_KEY = process.env.JWT_SECRET || 'your_secret_key';
 
 users.post('/login', async (req, res, next) => {
     try {
-        console.log(req.body);
         const username = req.body.username;
         const password = req.body.password;
         if (username && password) {
@@ -20,13 +19,11 @@ users.post('/login', async (req, res, next) => {
                     req.session.user = queryResult[0];
                     req.session.logged_in = true; 
                     res.statusCode = 200;
-                    console.log(req.session)
-                    console.log(req.cookies)
-                    console.log(queryResult)
                     const token = jwt.sign({ id: queryResult[0].id, username: queryResult[0].user_name }, SECRET_KEY, { expiresIn: '1d' });
 
                 // Send the token and user data to the frontend
                     res.json({  user: queryResult[0], token, status: { success: true, msg: "Logged in" } });
+                    console.log("new connection ");
                 } else {
                     res.statusCode = 200;
                     res.json({ user: null, status: { success: false, msg: "Username or password incorrect" } })
@@ -82,7 +79,6 @@ users.post('/register', async (req, res, next) => {
         const usernameExists = await DB.checkUsernameExists(username);
 
             if (usernameExists) {
-                console.log("Username already exists")
                 res.send({ status: { success: false, msg: "Username already exists" } })
             } else if (username && password && email) {
             
@@ -96,7 +92,6 @@ users.post('/register', async (req, res, next) => {
         else {
             res.statusCode = 200;
             res.send({ status: { success: false, msg: "Input element missing" } })
-            console.log("A field is missing!")
         }
         res.end();  
 
