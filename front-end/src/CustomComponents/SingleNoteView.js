@@ -15,8 +15,9 @@ class SingleNoteView extends React.Component {
     this.state = {
       images: [],         // Array to store the fetched image URLs
       loading: true,      // Loading state for the request
-      error: null         // Error state for the request
-    };
+      error: null    ,
+      showComments: false     // Error state for the request
+    }
   }
 
   componentDidMount() {
@@ -27,6 +28,12 @@ class SingleNoteView extends React.Component {
   handleCommentAdded = () => {
     // Refresh comments when a new comment is added
     this.commentListRef.fetchComments();
+  };
+
+  toggleComments = () => {
+    this.setState((prevState) => ({
+      showComments: !prevState.showComments,
+    }));
   };
 
   fetchNotes = async () => {
@@ -130,20 +137,7 @@ class SingleNoteView extends React.Component {
 
     return (
       <div className="container">
-        <div>
-          <div>
-            <a
-              onClick={(e) => {
-                e.preventDefault();
-                this.props.QSetView({ page: ADDNEWNOTE, noteId: this.props.noteId }); // Pass id_classes here
-              }}
-              style={{ cursor: 'pointer' }}
-              className="nav-link link-primary"
-            >
-              Add Note
-            </a>
-          </div>
-        </div>
+        
         <h2>Uploaded Images</h2>
         <div className="d-flex flex-column align-items-center"> {/* Center each image */}
           {this.state.images.map((image, index) => (
@@ -163,15 +157,51 @@ class SingleNoteView extends React.Component {
               </button>
             </div>
           ))}
+
+          <div>
+            <div>
+              <a
+                onClick={(e) => {
+                  e.preventDefault();
+                  this.props.QSetView({ page: ADDNEWNOTE, noteId: this.props.noteId }); // Pass id_classes here
+                }}
+                style={{ cursor: 'pointer' }}
+                className="nav-link link-primary"
+              >
+                Add Note
+              </a>
+            </div>
+          </div>
+
         </div>
 
         <button onClick={this.handleDelete} className="btn btn-danger mt-3">Delete Class</button>
-        <div>
-          <AddComment classId={this.props.noteId} id_users={this.props.user.id_users} onCommentAdded={this.handleCommentAdded} />
+        
+        <br></br>
+        <br></br>
+        <br></br>
 
-          <CommentList classId={this.props.noteId} id_users={this.props.user.id_users} ref={(ref) => this.commentListRef = ref} />
-        </div>
+        
+        {/* Toggle Button for Showing/Hiding Comments */}
+        <button onClick={this.toggleComments} className="btn btn-secondary mt-3">
+          {this.state.showComments ? "Hide Comments" : "Show Comments"}
+        </button>
+                
+        {this.state.showComments && (
+          <div>
+            <AddComment
+              classId={this.props.noteId}
+              id_users={this.props.user.id_users}
+              onCommentAdded={this.handleCommentAdded} // Call to refresh comments
+            />
 
+            <CommentList
+              classId={this.props.noteId}
+              id_users={this.props.user.id_users}
+              ref={(ref) => (this.commentListRef = ref)} // Reference for refreshing comments
+            />
+          </div>
+        )}
       </div>
     );
   }

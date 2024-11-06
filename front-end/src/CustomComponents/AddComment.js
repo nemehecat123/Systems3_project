@@ -48,17 +48,21 @@ class AddComment extends React.Component {
 
     render() {
       return (
-        <form onSubmit={this.handleSubmitComment}>
-          <textarea
-            value={this.state.commentText}
-            onChange={this.handleCommentChange}
-            placeholder="Write your comment here..."
-            rows="4"
-            required
-          />
-          <button type="submit" className="btn btn-primary mt-2">Add Comment</button>
-          {this.state.error && <div className="text-danger">{this.state.error}</div>}
-        </form>
+        <form onSubmit={this.handleSubmitComment} className="w-100"> {/* Full-width form */}
+        <textarea
+          value={this.state.commentText}
+          onChange={this.handleCommentChange}
+          placeholder="Write your comment here..."
+          rows="4"
+          required
+          className="form-control mb-2" // Bootstrap class for full-width textarea
+          style={{ width: '100%', resize: 'none' }} // Ensures it takes full width and prevents resizing
+        />
+        <button type="submit" className="btn btn-primary mt-2 w-100"> {/* Full-width button */}
+          Add Comment
+        </button>
+        {this.state.error && <div className="text-danger mt-2">{this.state.error}</div>}
+      </form>
       );
     }
   }

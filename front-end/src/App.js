@@ -42,7 +42,7 @@ class App extends Component {
       case LOGOUT:
         return <HomeView />;
       case CREATECLASS:
-        return <CreateClassView />;
+        return <CreateClassView QSetView={this.QSetView} />;
       case MYCLASSES:
         return <MyClassesView user={this.state.user} QSetView={this.QSetView} />;
       case SINGLENOTE:

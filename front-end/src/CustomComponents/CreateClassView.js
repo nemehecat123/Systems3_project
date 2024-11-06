@@ -51,6 +51,7 @@ class CreateClassView extends React.Component {
         }
       );
       this.setState({ success: 'Class created successfully!', error: null });
+      this.props.QSetView({ page: "MyClasses" })
     } catch (err) {
       console.log(err.message);
       this.setState({ error: 'Failed to create class. Please try again.', success: null });
@@ -104,7 +105,7 @@ class CreateClassView extends React.Component {
           </div>
 
           <div className="form-group">
-            <label>Year of the Class</label>
+            <label>day-month-year of the class 00-00-0000</label>
             <div className="input-group">
               <input
                 className="form-control"
@@ -123,7 +124,6 @@ class CreateClassView extends React.Component {
           {error && <p className="text-danger mt-3">{error}</p>}
         </form>
 
-        <button className="btn btn-primary mt-3" onClick={console.log(this.state)}>naredi nekej</button>
       </div>
 
 
