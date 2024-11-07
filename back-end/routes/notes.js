@@ -25,10 +25,8 @@ let upload_dest = multer({ dest: 'uploads/notes/' });
 notes.get('/', async (req, res, next) => {
   const authHeader = req.headers['authorization']; // Get the Authorization header
   const UserID = authHeader.split(' ')[1];
-  console.log(UserID);
   try {
         const queryResult = await DB.getAllClassesForUser(UserID);
-        console.log(queryResult);
         res.json(queryResult);
     } catch (err) {
         console.log(err);
@@ -42,7 +40,6 @@ notes.get('/getNotes', async (req, res, next) => {
     const authHeader = req.headers['authorization']; // Get the Authorization header
   const id_classes = authHeader.split(' ')[1]; // Extract user ID from token
 
-  console.log(id_classes +  ":  id classes ljudi hihihi")
   try {
     const queryResult = await DB.getAllNotesForUser(id_classes); // id_classes stevilko rabis da vidis "Listek"
     if (queryResult.length === 0) {
@@ -82,10 +79,6 @@ notes.get('/getNotes', async (req, res, next) => {
         yearOfClass,
       };
 
-      console.log(newNote);
-  
-
- 
       await DB.createNewClass(newNote); // Adjust this to match your database logic
       res.status(201).json({ success: true, message: 'Note created successfully!' });
     } catch (err) {
@@ -103,9 +96,6 @@ notes.get('/getNotes', async (req, res, next) => {
   
     const imageFiles = req.files; // Multer stores multiple files in req.files
 
-    console.log(id_classes);
-    console.log(imageFiles);
-  
     try {
       const newNote = {
         id_classes,
@@ -129,7 +119,6 @@ notes.get('/getNotes', async (req, res, next) => {
     notes.get('/searchClasses', async (req, res) => {
         const { query } = req.query; // Get the search query from the request
 
-        console.log(query);
     
         try {
         const searchResults = await DB.searchClassesByName(query);
@@ -160,7 +149,6 @@ notes.get('/getNotes', async (req, res, next) => {
 
       notes.delete('/deleteNote', async (req, res) => {
         const { id_notes } = req.body;  // Get the note ID from the request body
-        console.log(req.body)
         
         try {
           const result = await DB.deleteNote(id_notes); // Ensure your DB function handles the delete correctly
