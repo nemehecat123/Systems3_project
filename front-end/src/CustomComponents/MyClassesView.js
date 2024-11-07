@@ -91,7 +91,7 @@ class MyClassesView extends React.Component {
                     <a
                       onClick={(e) => {
                         e.preventDefault();
-                        this.props.QSetView({ page: SINGLENOTE, noteId: note.id_classes });
+                        this.props.QSetView({ page: SINGLENOTE, noteId: note.id_classes, className: note.name_classes });
                       }}
                       style={{ cursor: 'pointer' }}
                       className="nav-link link-primary"
