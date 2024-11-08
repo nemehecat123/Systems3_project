@@ -47,7 +47,7 @@ class MyClassesView extends React.Component {
 
     } catch (err) {
       // Handling errors and setting the error state
-      this.setState({ error: 'Failed to fetch notes', loading: false });
+      this.setState({ error: 'Failed to fetch classes', loading: false });
     }
   }; render() {
     const { loading, error, notes } = this.state;
@@ -76,7 +76,7 @@ class MyClassesView extends React.Component {
             >
               <div className="card-body">
                 <h5 className="card-title">Create a new Class</h5>
-                <button className="btn btn-primary">Create Note</button>
+                <button className="btn btn-primary">Create Class</button>
               </div>
             </div>
           </div>
@@ -103,7 +103,7 @@ class MyClassesView extends React.Component {
               </div>
             ))
           ) : (
-            <p>No notes uploaded yet.</p>
+            <p>No classes uploaded yet.</p>
           )}
         </div>
       </div>

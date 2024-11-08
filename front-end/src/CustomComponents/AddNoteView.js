@@ -91,7 +91,7 @@ class AddNoteView extends React.Component {
                     
                     <>
           <p className="text-danger mt-3">{error}</p>
-          <p className="text-info mt-1">You need to upload a .png file not to big </p>
+          <p className="text-info mt-1">You need to upload a picture file not to big </p>
         </>
 
                     }
