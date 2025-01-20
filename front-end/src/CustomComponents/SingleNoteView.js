@@ -58,10 +58,10 @@ class SingleNoteView extends React.Component {
 
         this.setState({ images: imageUrls, loading: false });
       } else {
-        this.setState({ error: 'Failed to load images', loading: false });
+        this.setState({ error: 'no images found', loading: false });
       }
     } catch (err) {
-      this.setState({ error: 'Failed to fetch images', loading: false });
+      this.setState({ error: 'no images found', loading: false });
     }
   };
 

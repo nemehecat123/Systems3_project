@@ -14,6 +14,7 @@ class AddComment extends React.Component {
         commentText: '',
         error: null,       // Error state for the request
       };
+      console.log("props inside AddComent",this.props);
     }
   
     handleCommentChange = (e) => {

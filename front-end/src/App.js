@@ -46,7 +46,7 @@ class App extends Component {
       case MYCLASSES:
         return <MyClassesView user={this.state.user} QSetView={this.QSetView} />;
       case SINGLENOTE:
-        return <SingleNoteView noteId={this.state.noteId} QSetView={this.QSetView} className={this.state.className}  />
+        return <SingleNoteView noteId={this.state.noteId} QSetView={this.QSetView} className={this.state.className} user={this.state.user} />
      case ADDNEWNOTE:
   return <AddNoteView noteId={this.state.noteId} className={this.state.className} QSetView={this.QSetView} />;
       case SEARCHVIEW:

@@ -56,7 +56,7 @@ class CommentList extends React.Component {
             {comments.map((comment) => (
               <li key={comment.id_comment} className="list-group-item">
                 <p><strong>User {comment.id_users}:</strong> {comment.content}</p>
-                <small>{new Date(comment.changed).toLocaleString()}</small>
+                <small>{new Date(comment.changed).toLocaleDateString()}</small>
               </li>
             ))}
           </ul>
