@@ -13,7 +13,6 @@ const port = process.env.PORT || 8205
 
 
 
-
 app.use(cookieParser());
 
 // Configuration if we had cross origin enabled.
@@ -57,7 +56,7 @@ app.use(express.urlencoded({extended : true}));
 app.use(cors({
  methods:["GET", "POST","DELETE"],
   credentials: true, 
-  origin: ['http://localhost:3000','http://localhost:3001']
+  origin: ['http://localhost:3000','http://localhost:8205']
 }))
 
 app.use(express.json());
