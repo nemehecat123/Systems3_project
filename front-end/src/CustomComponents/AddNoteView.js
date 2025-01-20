@@ -17,6 +17,10 @@ class AddNoteView extends React.Component {
         };
     }
 
+    componentDidMount() {
+        console.log("AddNoteView props:", this.props); // Check if className and noteId are received
+      }
+
     handleInputChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     };
@@ -64,7 +68,7 @@ class AddNoteView extends React.Component {
 
         return (
             <div className="container">
-                <h2>Add a New Note with Images</h2>
+                <h2>adding a note to {this.props.className}</h2>
                 <form onSubmit={this.handleSubmit}>
 
                     <div className="form-group">
@@ -82,7 +86,15 @@ class AddNoteView extends React.Component {
                     <button type="submit" className="btn btn-primary mt-3">Add Note</button>
 
                     {success && <p className="text-success mt-3">{success}</p>}
-                    {error && <p className="text-danger mt-3">{error}</p>}
+                    
+                    {error &&
+                    
+                    <>
+          <p className="text-danger mt-3">{error}</p>
+          <p className="text-info mt-1">You need to upload a picture file not to big </p>
+        </>
+
+                    }
                 </form>
             </div>
         );

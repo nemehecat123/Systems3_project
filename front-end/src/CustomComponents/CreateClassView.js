@@ -105,7 +105,7 @@ class CreateClassView extends React.Component {
           </div>
 
           <div className="form-group">
-            <label>day-month-year of the class 00-00-0000</label>
+            <label>day-month-year of the class 0000-00-00</label>
             <div className="input-group">
               <input
                 className="form-control"

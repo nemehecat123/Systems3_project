@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { API_URL } from "../Utils/Configuration";
+import { LOGIN } from "../Utils/Constants";
 
 class SignupView extends React.Component {
   constructor(props) {
@@ -57,6 +58,9 @@ class SignupView extends React.Component {
       .catch(err => {
         console.log(err)
       })
+      setTimeout(() => {
+        this.props.QSetView({ page: LOGIN });  // Update with actual constant or page ID
+    }, 4000);
   }
 
   render() {
@@ -98,9 +102,16 @@ class SignupView extends React.Component {
         success message  if an item was added. Use paragraph with the following classNmes:
           => no success: <p className="alert alert-danger" role="alert"> 
           => success: <p className="alert alert-success" role="alert">*/}
-        {this.state.status.success ?
-          <p className="alert alert-success"
-            role="alert">{this.state.status.msg}</p> : null}
+        {this.state.status.success ? (
+          <>
+            <p className="alert alert-success" role="alert">
+              {this.state.status.msg}
+            </p>
+            <p className="alert alert-info" role="alert">
+              Redirecting you to the login page...
+            </p>
+          </>
+        ) : null}
 
         {!this.state.status.success &&
           this.state.status.msg != "" ?

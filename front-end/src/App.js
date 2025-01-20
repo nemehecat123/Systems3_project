@@ -36,7 +36,7 @@ class App extends Component {
       case ABOUT:
         return <AboutView />;
       case SIGNUP:
-        return <SignupView />;
+        return <SignupView QSetView={this.QSetView}/>;
       case LOGIN:
         return <LoginView QUserFromChild={this.QSetLoggedIn} />;
       case LOGOUT:
@@ -46,9 +46,9 @@ class App extends Component {
       case MYCLASSES:
         return <MyClassesView user={this.state.user} QSetView={this.QSetView} />;
       case SINGLENOTE:
-        return <SingleNoteView noteId={this.state.noteId} QSetView={this.QSetView} user={this.state.user}/>
-      case ADDNEWNOTE:
-        return <AddNoteView noteId={this.state.noteId} />
+        return <SingleNoteView noteId={this.state.noteId} QSetView={this.QSetView} className={this.state.className}  />
+     case ADDNEWNOTE:
+  return <AddNoteView noteId={this.state.noteId} className={this.state.className} QSetView={this.QSetView} />;
       case SEARCHVIEW:
         return <SearchView QSetView={this.QSetView} />;
       default:
@@ -63,6 +63,7 @@ class App extends Component {
     this.setState({
       CurrentPage: obj.page,
       noteId: obj.noteId || null,
+      className: obj.className || null, // Save className in state
       }, () => {
           // This callback will be executed after the state has been updated
           console.log("State after QSetView:", this.state);

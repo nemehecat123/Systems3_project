@@ -109,8 +109,6 @@ class SingleNoteView extends React.Component {
 
   render() {
     const { loading, error, images } = this.state;
-    console.log(this.props)
-    const { classId } = this.props.noteId;
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>
@@ -120,7 +118,7 @@ class SingleNoteView extends React.Component {
           <a
             onClick={(e) => {
               e.preventDefault();
-              this.props.QSetView({ page: ADDNEWNOTE, noteId: this.props.noteId }); // Pass id_classes here
+              this.props.QSetView({ page: ADDNEWNOTE, noteId: this.props.noteId, className:this.props.className }); 
             }}
             style={{ cursor: 'pointer' }}
             className="nav-link link-primary"
@@ -138,7 +136,7 @@ class SingleNoteView extends React.Component {
     return (
       <div className="container">
         
-        <h2>Uploaded Images</h2>
+        <h2>{this.props.className}</h2>
         <div className="d-flex flex-column align-items-center"> {/* Center each image */}
           {this.state.images.map((image, index) => (
             <div key={image.id_notes} className="position-relative mb-4"> {/* Use id_notes as the key */}
@@ -163,7 +161,7 @@ class SingleNoteView extends React.Component {
               <a
                 onClick={(e) => {
                   e.preventDefault();
-                  this.props.QSetView({ page: ADDNEWNOTE, noteId: this.props.noteId }); // Pass id_classes here
+                  this.props.QSetView({ page: ADDNEWNOTE, noteId: this.props.noteId, className:this.props.className }); 
                 }}
                 style={{ cursor: 'pointer' }}
                 className="nav-link link-primary"
